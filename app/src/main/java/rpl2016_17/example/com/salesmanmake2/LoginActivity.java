@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
                 editor.apply();
                 Intent intent = new Intent(getApplication(),MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

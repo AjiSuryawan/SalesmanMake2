@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserProfile">
+
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="10dp"
+            android:background="#000"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/info"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textColor="#000"
+            android:layout_marginTop="160dp"
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+    <GridLayout
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="2.8"
+        android:layout_below="@id/rel"
+        android:layout_marginTop="20dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="1"
+        android:columnOrderPreserved="false"
+        android:padding="5dp"
+        android:rowCount="3">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
+            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#C7BBBB">
+
+                <TextView
+                    android:id="@+id/nomor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="081234567890"
+                    android:textColor="#B2000000"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="40dp"
+                    android:textSize="24dp"/>
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+    </GridLayout>
+    <GridLayout
+        android:id="@+id/grid2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="2.8"
+        android:layout_below="@id/grid"
+        android:layout_marginTop="20dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="1"
+        android:columnOrderPreserved="false"
+        android:padding="5dp"
+        android:rowCount="3">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#C7BBBB">
+
+                <TextView
+                    android:id="@+id/alamat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="19dp"
+                    android:text="Jl.Mutiara No.32 Bae Kudus"
+                    android:textColor="#B2000000"
+                    android:textSize="24dp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </GridLayout>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="2.8"
+        android:layout_below="@id/grid2"
+        android:layout_marginTop="20dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="1"
+        android:columnOrderPreserved="false"
+        android:padding="5dp"
+        android:rowCount="3">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="5dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#C7BBBB">
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginLeft="40dp"
+                    android:text="username@gmail.com"
+                    android:textColor="#B2000000"
+                    android:textSize="24dp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </GridLayout>
+
+
+</RelativeLayout>
