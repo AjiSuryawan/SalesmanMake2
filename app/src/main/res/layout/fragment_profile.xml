@@ -63,22 +63,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="O844578953"
+            android:text="O8"
             android:textSize="20dp"
             android:layout_marginTop="30dp"
             android:drawableLeft="@drawable/ic_phone_black_24dp"
             android:drawablePadding="12dp"
             android:layout_marginLeft="40dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="O844578953"
-            android:textSize="20dp"
-            android:layout_marginTop="30dp"
-            android:drawableLeft="@drawable/ic_phone_black_24dp"
-            android:drawablePadding="12dp"
-            android:layout_marginLeft="40dp"/>
+
 
     </android.support.v7.widget.CardView>
 
