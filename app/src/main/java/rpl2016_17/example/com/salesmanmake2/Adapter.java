@@ -71,14 +71,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ProductViewHolder> {
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitle, textViewShortDesc ;
+        TextView textViewTitle ;
         CardView cardview;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
             textViewTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
-//            textViewDescribe = (TextView) itemView.findViewById(R.id.tex);
             cardview = (CardView) itemView.findViewById(R.id.cardview);
         }
     }
