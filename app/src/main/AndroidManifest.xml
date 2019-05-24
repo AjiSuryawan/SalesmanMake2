@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".InputActivity"
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/kosong">
@@ -19,12 +21,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".Kontrol" />
-        <activity android:name=".LoginActivity"
-            android:theme="@style/kosong"></activity>
-        <activity android:name=".MainActivity"
-            android:theme="@style/kosong"/>
-        <activity android:name=".intromanager"></activity>
-        <activity android:name=".MainActivity3"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/kosong" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/kosong" />
+        <activity android:name=".intromanager" />
+        <activity android:name=".MainActivity3" />
+
+
     </application>
 
 </manifest>
