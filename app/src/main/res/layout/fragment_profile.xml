@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Prof"
+            android:text="Profile"
             android:textSize="18sp"
             android:gravity="center"
             android:layout_marginRight="16dp"
@@ -107,7 +107,7 @@
             android:text="RenoIrwan@gmail.com"
             android:layout_marginTop="155dp"
             android:textSize="20dp"
-            android:drawableLeft="@drawable/ic_phone_black_24dp"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
             android:drawablePadding="12dp"
             android:layout_marginLeft="40dp"/>
 
@@ -116,15 +116,15 @@
     </android.support.v7.widget.CardView>
 
     <Button
-        android:id="@+id/btn_lo"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_logout"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/card_item"
         android:drawableRight="@drawable/ic_navigate_next_black_24dp"
-        android:background="#E77722"
-
+        android:background="@drawable/edit_round"
         android:text="LOGOUT"
-        android:layout_marginLeft="310dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp"
         android:layout_alignParentRight="true"
         tools:ignore="OnClick" />
 
