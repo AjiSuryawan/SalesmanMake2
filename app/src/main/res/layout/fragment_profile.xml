@@ -22,7 +22,8 @@
             android:textColor="#fff"
             />
     </android.support.v7.widget.Toolbar>
-    
+
+
 
     <RelativeLayout
         android:id="@+id/rel"
@@ -63,7 +64,11 @@
         android:layout_below="@id/rel"
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp">
 
         <TextView
             android:id="@+id/nomor"
