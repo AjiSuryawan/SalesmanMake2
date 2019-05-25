@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText email, pasword;
+    EditText email, hp;
     Button btnlogin;
+    String text_email,text_hp;
     private static final String MY_PREFS_NAME = "login";
 
     @Override
@@ -20,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         email = findViewById(R.id.et_email);
-        pasword = findViewById(R.id.et_hp);
+        hp = findViewById(R.id.et_hp);
         btnlogin = findViewById(R.id.btn_login);
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
@@ -28,12 +30,24 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                editor.putString("name", email.getText().toString());
-                editor.apply();
-                Intent intent = new Intent(getApplication(),MainActivity.class);
-                startActivity(intent);
-                finish();
+                text_email = email.getText().toString();
+                text_hp = hp.getText().toString();
+                if(text_email.isEmpty() && text_hp.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Email dan Nomor Handphone tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                }
+                else if(text_email.isEmpty() ){
+                    Toast.makeText(getApplicationContext(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                }else if(text_hp.isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Nomor Handphone tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                }else{
+                    SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putString("name", email.getText().toString());
+                    editor.apply();
+                    Intent intent = new Intent(getApplication(),MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
     }

@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileFragment extends Fragment {
     Button btnlogout;
     private static final String MY_PREFS_NAME = "login";
-
+    TextView username;
     public ProfileFragment() {
     }
 
@@ -24,6 +25,13 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile,container,false);
+
+        username = view.findViewById(R.id.username);
+        SharedPreferences preferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+        String name = preferences.getString("name","");
+        if (name != null){
+            username.setText(name);
+        }
         btnlogout = (Button)view.findViewById(R.id.btn_logout);
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override

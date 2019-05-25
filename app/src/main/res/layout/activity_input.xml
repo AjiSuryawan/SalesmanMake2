@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:shimmer="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InputActivity">
+    xmlns:tools="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:id="@+id/toolbar"
-        tools:ignore="MissingConstraints">
+        >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,4 +24,120 @@
             />
     </android.support.v7.widget.Toolbar>
 
-</android.support.constraint.ConstraintLayout>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/linearLayout">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#000"
+                android:layout_marginBottom="10dp">
+            </RelativeLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_namebrg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <EditText
+                    android:id="@+id/nameitems"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:hint="Nama Barang"/>
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_banyakbarang"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+                <EditText
+                    android:id="@+id/totalitems"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:hint="Banyak Barang"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Image"
+                android:id="@+id/buttonSelect"
+                android:background="#FFF"
+                android:layout_margin="10dp"/>
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/padding_10"
+                android:src="@mipmap/ic_launcher_round"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:id="@+id/imageView"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_lokasi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location Laporan"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="30dp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginBottom="5dp"/>
+            <TextView
+                android:id="@+id/tv_waktu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waktu Laporan"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="30dp"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif-light"
+            android:layout_marginBottom="22dp"/>
+
+            <TextView
+                android:id="@+id/dummyttd"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:text="TTD SALES"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:background="#fff"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginBottom="22dp"/>
+
+            <Button
+                android:id="@+id/buttonUpload"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:drawableRight="@drawable/ic_navigate_next_black_24dp"
+                android:background="@drawable/edit_round"
+                android:text="Upload"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
