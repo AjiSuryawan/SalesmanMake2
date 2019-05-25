@@ -9,11 +9,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;
+    private long backbutton;
+    private Toast backtoast;
 
     private HomeFragment homeFragment;
     private NotificationFragment notificationFragment;
@@ -63,4 +66,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
