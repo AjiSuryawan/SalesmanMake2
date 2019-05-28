@@ -21,10 +21,13 @@
             />
     </android.support.v7.widget.Toolbar>
 
-    <TextView
+
+
+    <Button
         android:layout_below="@+id/toolbar_notif"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ini Notif"/>
+        android:id="@+id/pindah"
+        android:text="Pindah"/>
 
 </RelativeLayout>

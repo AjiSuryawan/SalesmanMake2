@@ -2,15 +2,20 @@ package rpl2016_17.example.com.salesmanmake2;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -87,6 +93,12 @@ public class FormRecord extends AppCompatActivity {
 
     Toolbar toolbar;
 
+    private static final int REQUEST_LOCATION = 1;
+    Button button;
+    TextView textView;
+    LocationManager locationManager;
+    String lattitude,longitude;
+
 
 
     @Override
@@ -117,6 +129,7 @@ public class FormRecord extends AppCompatActivity {
                 showPictureDialog();
 
 
+
             }
         });
 
@@ -138,6 +151,7 @@ public class FormRecord extends AppCompatActivity {
                             }
                         }).create().show();
 
+
             }
         });
 
@@ -147,6 +161,14 @@ public class FormRecord extends AppCompatActivity {
                         5);
             }
         }
+
+
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        textView = (TextView)findViewById(R.id.tv_lokasi);
+        button = (Button)findViewById(R.id.buttonSelect);
+
+
+
 
     }
 
@@ -174,6 +196,14 @@ public class FormRecord extends AppCompatActivity {
     }
 
     private void showPictureDialog() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+
+        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            getLocation();
+        }
+
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
         String[] pictureDialogItems = {
@@ -369,5 +399,76 @@ public class FormRecord extends AppCompatActivity {
         Log.e("", "createImageFile: " + cameraFilePath);
         return image;
     }
+
+
+    private void getLocation() {
+        if (ActivityCompat.checkSelfPermission(FormRecord.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (FormRecord.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(FormRecord.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        } else {
+            Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+            Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+            Location location2 = locationManager.getLastKnownLocation(LocationManager. PASSIVE_PROVIDER);
+
+            if (location != null) {
+                double latti = location.getLatitude();
+                double longi = location.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
+                        + "\n" + "Longitude = " + longitude);
+
+            } else  if (location1 != null) {
+                double latti = location1.getLatitude();
+                double longi = location1.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
+                        + "\n" + "Longitude = " + longitude);
+
+
+            } else  if (location2 != null) {
+                double latti = location2.getLatitude();
+                double longi = location2.getLongitude();
+                lattitude = String.valueOf(latti);
+                longitude = String.valueOf(longi);
+
+                textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
+                        + "\n" + "Longitude = " + longitude);
+
+            }else{
+
+                Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
+
+    protected void buildAlertMessageNoGps() {
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Please Turn ON your GPS Connection")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, final int id) {
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
 }
