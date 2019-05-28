@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView mMainNav;
     private FrameLayout mMainFrame;
+    private long backbutton;
+    private Toast backtoast;
 
     private HomeFragment homeFragment;
     private NotificationFragment notificationFragment;
@@ -77,4 +79,3 @@ public class MainActivity extends AppCompatActivity {
         backPressed =System.currentTimeMillis();
     }
 }
-
