@@ -14,8 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -39,11 +37,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
-        Adapter adapter = (Adapter) new rpl2016_17.example.com.salesmanmake2.Adapter(getContext(), itemList);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        Adapter adapter =  new Adapter(getActivity(),itemList);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter((RecyclerView.Adapter) adapter);
+        recyclerView.setAdapter(adapter);
         return view;
     }
 
@@ -132,7 +130,7 @@ public class HomeFragment extends Fragment {
         adapter = new rpl2016_17.example.com.salesmanmake2.Adapter(getActivity(), itemList);
 
         //setting adapter to recyclerview
-        recyclerView.setAdapter(adapter);
+
 
 
     }
