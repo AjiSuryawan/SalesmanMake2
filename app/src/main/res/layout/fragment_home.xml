@@ -21,8 +21,6 @@
         />
 </android.support.v7.widget.Toolbar>
 
-
-
     <Button
         android:layout_below="@+id/toolbar_home"
         android:layout_width="match_parent"
