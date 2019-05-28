@@ -196,13 +196,13 @@ public class FormRecord extends AppCompatActivity {
     }
 
     private void showPictureDialog() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            buildAlertMessageNoGps();
-
-        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            getLocation();
-        }
+//        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            buildAlertMessageNoGps();
+//
+//        } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            getLocation();
+//        }
 
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
@@ -263,7 +263,13 @@ public class FormRecord extends AppCompatActivity {
                     ShowSelectedImage.setImageBitmap(FixBitmap);
                     ShowSelectedImage.setVisibility(View.VISIBLE);
                     UploadImageOnServerButton.setVisibility(View.VISIBLE);
+                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        buildAlertMessageNoGps();
 
+                    } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        getLocation();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(FormRecord.this, "Failed!", Toast.LENGTH_SHORT).show();
@@ -281,6 +287,13 @@ public class FormRecord extends AppCompatActivity {
             }
             UploadImageOnServerButton.setVisibility(View.VISIBLE);
             ShowSelectedImage.setVisibility(View.VISIBLE);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                buildAlertMessageNoGps();
+
+            } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                getLocation();
+            }
             //  saveImage(thumbnail);
             //Toast.makeText(ShadiRegistrationPart5.this, "Image Saved!", Toast.LENGTH_SHORT).show();
         }
@@ -421,17 +434,34 @@ public class FormRecord extends AppCompatActivity {
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
 
+                textView.setVisibility(View.VISIBLE);
+
                 textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
+
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        maps();
+                    }
+                });
 
             } else  if (location1 != null) {
                 double latti = location1.getLatitude();
                 double longi = location1.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
+                textView.setVisibility(View.VISIBLE);
 
                 textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
+
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        maps();
+                    }
+                });
 
 
             } else  if (location2 != null) {
@@ -439,9 +469,17 @@ public class FormRecord extends AppCompatActivity {
                 double longi = location2.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
-
+                textView.setVisibility(View.VISIBLE);
+//                "geo:"+lattitude+","+longitude;
                 textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
+
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        maps();
+                    }
+                });
 
             }else{
 
@@ -449,6 +487,16 @@ public class FormRecord extends AppCompatActivity {
 
             }
         }
+    }
+
+    private void maps() {
+
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setData(Uri.parse("geo:"+lattitude+","+longitude));
+//        startActivity(intent);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("geo:?q="+lattitude+","+longitude));
+        startActivity(intent);
     }
 
     protected void buildAlertMessageNoGps() {
