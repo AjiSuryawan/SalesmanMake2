@@ -8,13 +8,13 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -42,8 +42,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class InputActivity extends AppCompatActivity {
-
+public class FormRecord extends AppCompatActivity {
     private String cameraFilePath;
 
     Button GetImageFromGalleryButton, UploadImageOnServerButton;
@@ -87,14 +86,19 @@ public class InputActivity extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
 
     Toolbar toolbar;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input);
+        setContentView(R.layout.activity_form_record);
+
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Input Data");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         GetImageFromGalleryButton = (Button) findViewById(R.id.buttonSelect);
 
@@ -123,7 +127,7 @@ public class InputActivity extends AppCompatActivity {
 
                 GetImageNameFromEditText = "makan";
 
-                new AlertDialog.Builder(InputActivity.this)
+                new AlertDialog.Builder(FormRecord.this)
                         .setTitle("Save data")
                         .setMessage("Apakah anda yakin ingin save data ?")
                         .setNegativeButton("Tidak", null)
@@ -137,13 +141,36 @@ public class InputActivity extends AppCompatActivity {
             }
         });
 
-        if (ContextCompat.checkSelfPermission(InputActivity.this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(InputActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+        if (ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{android.Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         5);
             }
         }
 
+    }
+
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("Konfirmasi Pembatalan");
+        builder.setMessage("Apakah anda yakin membatalkan input data?");
+        builder.setPositiveButton("YA", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user pressed "yes", then he is allowed to exit from application
+                finish();
+            }
+        });
+        builder.setNegativeButton("TIDAK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void showPictureDialog() {
@@ -171,13 +198,13 @@ public class InputActivity extends AppCompatActivity {
 
     public void choosePhotoFromGallary() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
         startActivityForResult(galleryIntent, GALLERY);
     }
 
     private void takePhotoFromCamera() {
-        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", createImageFile()));
             Log.e("", "putExtra: " );
@@ -209,7 +236,7 @@ public class InputActivity extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Toast.makeText(InputActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FormRecord.this, "Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -240,7 +267,7 @@ public class InputActivity extends AppCompatActivity {
 
             } else {
 
-                Toast.makeText(InputActivity.this, "Unable to use Camera..Please Allow us to use Camera", Toast.LENGTH_LONG).show();
+                Toast.makeText(FormRecord.this, "Unable to use Camera..Please Allow us to use Camera", Toast.LENGTH_LONG).show();
 
             }
         }
@@ -342,4 +369,5 @@ public class InputActivity extends AppCompatActivity {
         Log.e("", "createImageFile: " + cameraFilePath);
         return image;
     }
+
 }

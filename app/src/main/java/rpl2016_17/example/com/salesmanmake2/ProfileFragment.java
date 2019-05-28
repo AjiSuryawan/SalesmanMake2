@@ -1,6 +1,8 @@
 package rpl2016_17.example.com.salesmanmake2;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,22 +29,37 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile,container,false);
 
         username = view.findViewById(R.id.username);
-        SharedPreferences preferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
+        final SharedPreferences preferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
         String name = preferences.getString("name","");
         if (name != null){
             username.setText(name);
         }
+
         btnlogout = (Button)view.findViewById(R.id.btn_logout);
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getActivity().getSharedPreferences("login", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.commit();
-                Intent intent = new Intent(getActivity(),Kontrol.class);
-                startActivity(intent);
-                getActivity().finish();
+                new AlertDialog.Builder(getContext())
+                        .setMessage("Anda yakin ingin keluar ?")
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.clear();
+                                editor.commit();
+                                Intent intent = new Intent(getActivity(), Kontrol.class);
+                                getActivity().finish();
+                                startActivity(intent);
+
+                            }
+                        })
+                        .setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .show();
             }
         });
         return view;

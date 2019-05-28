@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="rpl2016_17.example.com.salesmanmake2">
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-feature android:name="android.hardware.camera" android:required="false"></uses-feature>
     <uses-permission android:name="android.permission.INTERNET" />
+
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
@@ -13,8 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InputActivity"
-            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".SplashActivity"
             android:theme="@style/kosong">
@@ -33,6 +31,19 @@
             android:theme="@style/kosong" />
         <activity android:name=".intromanager" />
         <activity android:name=".MainActivity3" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths">
+            </meta-data>
+        </provider>
+        <activity android:name=".FormRecord"
+            android:parentActivityName=".MainActivity"/>
 
 
     </application>

@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private NotificationFragment notificationFragment;
     private ProfileFragment profileFragment;
 
+    private static final int TIME_LIMIT = 1500;
+    private static long backPressed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,25 +71,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(false);
-        builder.setTitle("Keluar Aplikasi");
-        builder.setMessage("Apakah anda yakin ingin keluar ?");
-        builder.setPositiveButton("YA", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if user pressed "yes", then he is allowed to exit from application
-                finish();
-            }
-        });
-        builder.setNegativeButton("TIDAK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //if user select "No", just cancel this dialog and continue with app
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        if (TIME_LIMIT + backPressed > System.currentTimeMillis()){
+            super.onBackPressed();;
+        }else {
+            Toast.makeText(getApplicationContext(),"Press back again to exit",Toast.LENGTH_SHORT).show();
+        }
+        backPressed =System.currentTimeMillis();
     }
 }
