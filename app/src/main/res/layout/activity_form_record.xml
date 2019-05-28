@@ -70,7 +70,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:hint="Banyak Barang"/>
+                    android:hint="Banyak Barang"
+                    android:inputType="number"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button
