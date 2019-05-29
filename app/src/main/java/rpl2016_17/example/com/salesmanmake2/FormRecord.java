@@ -41,7 +41,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -167,7 +169,11 @@ public class FormRecord extends AppCompatActivity {
         textView = (TextView)findViewById(R.id.tv_lokasi);
         button = (Button)findViewById(R.id.buttonSelect);
 
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
 
+        TextView textViewDate  = findViewById(R.id.tv_waktu);
+        textViewDate.setText(currentDate);
 
 
     }
