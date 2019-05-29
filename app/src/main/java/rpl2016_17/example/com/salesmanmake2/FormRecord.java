@@ -47,6 +47,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -97,7 +99,7 @@ public class FormRecord extends AppCompatActivity {
 
     private static final int REQUEST_LOCATION = 1;
     Button button;
-    TextView textView;
+    TextView textViewLoc , textViewTime;
     LocationManager locationManager;
     String lattitude,longitude;
 
@@ -166,14 +168,13 @@ public class FormRecord extends AppCompatActivity {
 
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        textView = (TextView)findViewById(R.id.tv_lokasi);
+        textViewLoc = (TextView)findViewById(R.id.tv_lokasi);
         button = (Button)findViewById(R.id.buttonSelect);
+       textViewTime = (TextView)findViewById(R.id.tv_waktu);
 
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
-
-        TextView textViewDate  = findViewById(R.id.tv_waktu);
-        textViewDate.setText(currentDate);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy. 'at' HH:mm:ss z");
+        String currentDateandTime = sdf.format(new Date());
+        textViewTime.setText("Your current time : " + "\n" + currentDateandTime);
 
 
     }
@@ -269,6 +270,8 @@ public class FormRecord extends AppCompatActivity {
                     ShowSelectedImage.setImageBitmap(FixBitmap);
                     ShowSelectedImage.setVisibility(View.VISIBLE);
                     UploadImageOnServerButton.setVisibility(View.VISIBLE);
+
+
                     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         buildAlertMessageNoGps();
@@ -440,12 +443,13 @@ public class FormRecord extends AppCompatActivity {
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
 
-                textView.setVisibility(View.VISIBLE);
+                textViewLoc.setVisibility(View.VISIBLE);
+                textViewTime.setVisibility(View.VISIBLE);
 
-                textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
+                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
 
-                textView.setOnClickListener(new View.OnClickListener() {
+                textViewLoc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         maps();
@@ -457,12 +461,13 @@ public class FormRecord extends AppCompatActivity {
                 double longi = location1.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
-                textView.setVisibility(View.VISIBLE);
+                textViewLoc.setVisibility(View.VISIBLE);
+                textViewTime.setVisibility(View.VISIBLE);
 
-                textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
+                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
 
-                textView.setOnClickListener(new View.OnClickListener() {
+                textViewLoc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         maps();
@@ -475,12 +480,13 @@ public class FormRecord extends AppCompatActivity {
                 double longi = location2.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
-                textView.setVisibility(View.VISIBLE);
+                textViewLoc.setVisibility(View.VISIBLE);
+                textViewTime.setVisibility(View.VISIBLE);
 //                "geo:"+lattitude+","+longitude;
-                textView.setText("Your current location is"+ "\n" + "Lattitude = " + lattitude
+                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
 
-                textView.setOnClickListener(new View.OnClickListener() {
+                textViewLoc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         maps();
@@ -523,6 +529,17 @@ public class FormRecord extends AppCompatActivity {
         final AlertDialog alert = builder.create();
         alert.show();
     }
+
+//    public void getCurrentTime(View view) {
+//        Calendar calendar = Calendar.getInstance();
+//        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
+//        String strDate = "Current Time : " + mdformat.format(calendar.getTime());
+//        display(strDate);
+//    }
+//
+//    private void display(String num) {
+//        textViewTime.setText(num);
+//    }
 
 
 }

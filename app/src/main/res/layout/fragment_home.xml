@@ -28,6 +28,7 @@
         android:layout_below="@id/toolbar_home"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
+
         android:id="@+id/recycler">
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
