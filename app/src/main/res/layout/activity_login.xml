@@ -93,7 +93,7 @@
     <Button
         android:id="@+id/btn_login"
         android:layout_width="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/et_pw"
         android:layout_alignParentRight="true"

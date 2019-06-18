@@ -11,8 +11,7 @@ public class dialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Credits")
-                .setMessage("Creator by Ryandhika Bintang Abiyyi\n           Yazid Shollakhudin Ainur Khafid")
-                .setMessage("Support by Rus Animation Studio")
+                .setMessage("Creator by Dummy \nSupport by Rus Animation Studio")
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

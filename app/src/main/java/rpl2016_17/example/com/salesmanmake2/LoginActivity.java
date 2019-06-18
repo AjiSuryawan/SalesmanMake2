@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     String text_email, text_pw;
     private static final String MY_PREFS_NAME = "login";
 
-    public String emailku = email.getText().toString();
-    public String pwku = pw.getText().toString();
+//    public String emailku = email.getText().toString();
+//    public String pwku = pw.getText().toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +63,14 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 text_email = email.getText().toString();
                 text_pw = pw.getText().toString();
-                if (text_email.isEmpty() && text_pw.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Email dan Nomor Handphone tidak boleh kosong", Toast.LENGTH_SHORT).show();
-                } else if (text_email.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Email tidak boleh kosong", Toast.LENGTH_SHORT).show();
-                } else if (text_pw.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Nomor Handphone tidak boleh kosong", Toast.LENGTH_SHORT).show();
+                if (text_email.length()==0) {
+                    email.setError("Enter email");
+                } else if (text_pw.length()==0) {
+                    pw.setError("Enter password");
                 } else {
                     AndroidNetworking.post("http://sales-report.smkrus.com/api/login")
-                            .addBodyParameter("email", emailku)
-                            .addBodyParameter("password", pwku)
+                            .addBodyParameter("email", text_email)
+                            .addBodyParameter("password", text_pw)
                             .setPriority(Priority.MEDIUM)
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
