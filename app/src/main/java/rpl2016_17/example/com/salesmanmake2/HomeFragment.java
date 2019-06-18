@@ -1,7 +1,7 @@
 package rpl2016_17.example.com.salesmanmake2;
 
 
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -129,7 +129,7 @@ public class HomeFragment extends Fragment {
         //creating recyclerview adapter
         adapter = new rpl2016_17.example.com.salesmanmake2.Adapter(getActivity(), itemList);
 
-        //setting adapter to recyclerview
+
 
 
 
