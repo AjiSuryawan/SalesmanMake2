@@ -62,41 +62,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:hint="Email / Ussername"/>
+        android:hint="Email / Username"
+        android:maxLines="1"
+        android:inputType="textEmailAddress"/>
 
 </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_hp"
+        android:id="@+id/input_layout_pw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp">
+        android:paddingRight="30dp"
+        android:layout_marginTop="10dp">
 
         <EditText
-            android:id="@+id/et_hp"
+            android:id="@+id/et_pw"
             android:textColor="#000"
             android:textColorHint="#000"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:inputType="number"
-            android:hint="Nomor Handphone" />
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:hint="Password" />
 
     </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="100dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/et_hp"
+        android:layout_below="@id/et_pw"
         android:layout_alignParentRight="true"
         android:background="@drawable/edit_round"
         android:drawableRight="@drawable/ic_navigate_next_black_24dp"
         android:text="LOGIN"
         tools:ignore="OnClick"
-        android:layout_marginRight="-120dp" />
+        android:layout_marginRight="-120dp"
+        android:textColor="@color/white"/>
 
 
 </LinearLayout>

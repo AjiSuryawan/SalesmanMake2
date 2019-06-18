@@ -54,7 +54,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:hint="Nama Barang"/>
+                    android:hint="Nama Barang"
+                    android:maxLines="1"
+                    android:inputType="text"/>
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_banyakbarang"
@@ -79,8 +81,10 @@
                 android:layout_height="wrap_content"
                 android:text="Select Image"
                 android:id="@+id/buttonSelect"
-                android:background="#FFF"
-                android:layout_margin="10dp"/>
+                android:background="@drawable/btnshapes"
+                android:layout_margin="10dp"
+
+                />
 
             <ImageView
                 android:layout_gravity="center"
@@ -138,6 +142,7 @@
                 android:text="Upload"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
+                android:textColor="@color/white"
                 android:layout_margin="10dp"/>
 
         </LinearLayout>

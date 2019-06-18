@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".SalesApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,11 +21,7 @@
         <activity
             android:name=".SplashActivity"
             android:theme="@style/kosong">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Kontrol" />
         <activity
@@ -32,7 +29,14 @@
             android:theme="@style/kosong" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/kosong" />
+            android:theme="@style/kosong">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".intromanager" />
         <activity android:name=".MainActivity3" />
 
