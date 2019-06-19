@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:id="@+id/toolbar"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Detail Job"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginRight="72dp"
+            android:textColor="#fff"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_marginTop="50dp"
+            android:id="@+id/tv_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detail Jobs"
+            android:layout_gravity="left"
+            android:textColor="#000"
+            android:layout_marginLeft="30dp"
+            android:textSize="30sp"
+            android:fontFamily="monospace"
+            />
+
+            //deskripsi jobnya
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            >
+            <TextView
+                android:id="@+id/descjob"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi : "
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light" />
+
+            <TextView
+                android:id="@+id/tv_descjob"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light"/>
+        </LinearLayout>
+
+        //deskripsi Nama Toko
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+            <TextView
+                android:id="@+id/shop_name"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nama Toko : "
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light" />
+
+            <TextView
+                android:id="@+id/tv_shop_name"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light"/>
+        </LinearLayout>
+
+        //deskripsi Alamat Toko
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+            <TextView
+                android:id="@+id/shop_address"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alamat : "
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light" />
+
+            <TextView
+                android:id="@+id/tv_shop_address"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light"/>
+        </LinearLayout>
+
+        //deskripsi Nomor Toko
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+            <TextView
+                android:id="@+id/shop_phone"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Telp : "
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="30dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light" />
+
+            <TextView
+                android:id="@+id/tv_shop_phone"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/dummy"
+                android:layout_gravity="left"
+                android:textColor="#000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="20sp"
+                android:fontFamily="sans-serif-light"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="input job"
+            android:id="@+id/btn_input_job"
+            android:background="@drawable/btnshapes"
+            android:layout_margin="10dp"
+
+            />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

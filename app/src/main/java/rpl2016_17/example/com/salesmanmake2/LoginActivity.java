@@ -84,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
                                                 Long id = payload.getLong("id");
                                                 //code sharpref..
                                                 SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-                                                editor.putString("name", email.getText().toString());
+                                                editor.putString("name", email.getText().toString())
+                                                        .putLong("id", id);
                                                 editor.apply();
                                                 Intent intent = new Intent(getApplication(), MainActivity.class);
                                                 startActivity(intent);
