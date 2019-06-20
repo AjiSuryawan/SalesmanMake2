@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class DetailJobActivity extends AppCompatActivity {
     Button button;
@@ -30,5 +31,22 @@ public class DetailJobActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        String name = getIntent().getExtras().getString("shop_name");
+        String address = getIntent().getExtras().getString("shop_address");
+        String phone = getIntent().getExtras().getString("shop_phone");
+        String desc = getIntent().getExtras().getString("shop_desc");
+
+
+        TextView nama = findViewById(R.id.tv_shop_name);
+        TextView alamat = findViewById(R.id.tv_shop_address);
+        TextView nomor = findViewById(R.id.tv_shop_phone);
+        TextView deskripsi = findViewById(R.id.tv_descjob);
+
+
+        nama.setText(name);
+        alamat.setText(address);
+        nomor.setText(""+phone);
+        deskripsi.setText(desc);
     }
 }

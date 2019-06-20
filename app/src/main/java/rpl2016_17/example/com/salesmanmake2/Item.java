@@ -5,7 +5,7 @@ public class Item {
     private String description;
     private String shop_name;
     private String shop_address;
-    private int shop_phone;
+    private String shop_phone;
 
     public Item() {
         this.id = id;
@@ -49,11 +49,11 @@ public class Item {
         this.shop_address = shop_address;
     }
 
-    public int getShop_phone() {
+    public String getShop_phone() {
         return shop_phone;
     }
 
-    public void setShop_phone(int shop_phone) {
+    public void setShop_phone(String shop_phone) {
         this.shop_phone = shop_phone;
     }
 }

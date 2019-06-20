@@ -1,6 +1,7 @@
 package rpl2016_17.example.com.salesmanmake2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,8 +29,21 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ProductViewHolder> {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.layout_product, parent, false);
-        ProductViewHolder productViewHolder = new ProductViewHolder(view);
+        final ProductViewHolder productViewHolder = new ProductViewHolder(view);
+        productViewHolder.cardview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mCtx,DetailJobActivity.class);
+                i.putExtra("shop_address",productList.get(productViewHolder.getAdapterPosition()).getShop_address());
+                i.putExtra("shop_name",productList.get(productViewHolder.getAdapterPosition()).getShop_name());
+                i.putExtra("shop_phone",productList.get(productViewHolder.getAdapterPosition()).getShop_phone());
+                i.putExtra("shop_desc",productList.get(productViewHolder.getAdapterPosition()).getDescription());
+                i.putExtra("shop_id",productList.get(productViewHolder.getAdapterPosition()).getId());
 
+                mCtx.startActivity(i);
+
+            }
+        });
 
         return productViewHolder;
     }
@@ -40,27 +54,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ProductViewHolder> {
         final Item item = productList.get(position);
 
         holder.address.setText(productList.get(position).getShop_address());
-        holder.phone.setText(productList.get(position).getShop_phone());
+        holder.phone.setText(""+productList.get(position).getShop_phone());
         holder.description.setText(productList.get(position).getDescription());
         holder.name.setText(productList.get(position).getShop_name());
-        holder.id.setText(productList.get(position).getId());
+        holder.id.setText(""+productList.get(position).getId());
 
 
 
-//        holder.cardview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Toast.makeText(mCtx,"makan"+position,Toast.LENGTH_SHORT).show();
-//                //intent plus passing data ke activity baru
-//                Intent intent = new Intent(mCtx.getApplicationContext(), DetailActivity.class);
-////                intent.putExtra("foto", product.getImage());
-//                intent.putExtra("des", product.getDescribe());
-//                intent.putExtra("Title", product.getTitle());
-//                intent.putExtra("Describe", product.getShortdesc());
-//                intent.putExtra("image", product.getImage());
-//                mCtx.startActivity(intent);
-//            }
-//        });
     }
 
 
