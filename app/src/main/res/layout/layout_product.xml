@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,29 +8,99 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardview"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
         android:elevation="5dp"
         app:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:layout_height="match_parent"
+            android:padding="3dp">
+
+ <TextView
+    android:id="@+id/job_id"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="1"
+    android:textColor="#000"
+    android:textSize="20sp"/>
 
             <TextView
-                android:id="@+id/textViewTitle"
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="5dp"
-                android:text="Agenda 1"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
-                android:textColor="#000000"
-                android:textSize="23dp" />
+                android:text="Addres :"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:textColor="#000"
+                android:layout_below="@id/shop_name"/>
+
+            <TextView
+                android:id="@+id/shop_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lorem ipsum"
+                android:layout_below="@id/shop_name"
+                android:layout_marginLeft="100dp"
+                android:textColor="#000"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="lorem ipsum"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginLeft="20dp"
+                android:textColor="#000"
+                android:textSize="20sp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phone   :"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:textColor="#000"
+                android:layout_below="@id/address"/>
+
+            <TextView
+                android:id="@+id/shop_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08676786778"
+                android:layout_below="@id/shop_address"
+                android:layout_marginLeft="100dp"
+                android:textColor="#000"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description:"
+                android:textStyle="bold"
+                android:layout_below="@id/shop_phone"
+                android:layout_marginLeft="20dp"
+                android:textColor="#000"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/job_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ini bagian deskripsi"
+                android:layout_below="@id/shop_phone"
+                android:layout_marginLeft="135dp"
+                android:textColor="#000"
+                android:textSize="20sp"/>
 
  </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-</LinearLayout>
+</RelativeLayout>

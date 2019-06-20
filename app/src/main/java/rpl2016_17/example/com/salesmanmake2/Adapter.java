@@ -28,15 +28,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ProductViewHolder> {
         //inflating and returning our view holder
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.layout_product, parent, false);
-        return new ProductViewHolder(view);
+        ProductViewHolder productViewHolder = new ProductViewHolder(view);
+
+
+        return productViewHolder;
     }
 
     @Override
     public void onBindViewHolder(final ProductViewHolder holder, final int position) {
         //getting the product of the specified position
         final Item item = productList.get(position);
-        holder.textViewTitle.setText(item.getAgenda());
 
+        holder.address.setText(productList.get(position).getShop_address());
+        holder.phone.setText(productList.get(position).getShop_phone());
+        holder.description.setText(productList.get(position).getDescription());
+        holder.name.setText(productList.get(position).getShop_name());
+        holder.id.setText(productList.get(position).getId());
 
 
 
@@ -71,13 +78,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ProductViewHolder> {
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitle ;
+
         CardView cardview;
+        TextView id,description,name,phone,address;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
-            textViewTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            id = (TextView) itemView.findViewById(R.id.job_id);
+            description = (TextView) itemView.findViewById(R.id.job_description);
+            name = (TextView) itemView.findViewById(R.id.shop_name);
+            phone = (TextView) itemView.findViewById(R.id.shop_phone);
+            address = (TextView) itemView.findViewById(R.id.shop_address);
             cardview = (CardView) itemView.findViewById(R.id.cardview);
         }
     }
