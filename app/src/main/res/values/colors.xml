@@ -9,7 +9,7 @@
     <color name="grey">#ededed</color>
 
     <color name="colorWhite">#ffffff</color>
-    <color name="colorWhiteTransparent">#80ffffff</color>\
+    <color name="colorWhiteTransparent">#80ffffff</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#f64c73</color>

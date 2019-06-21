@@ -1,8 +1,7 @@
-package rpl2016_17.example.com.salesmanmake2;
+package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +19,8 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import rpl2016_17.example.com.salesmanmake2.Constants;
+import rpl2016_17.example.com.salesmanmake2.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -43,18 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.et_email);
         pw = findViewById(R.id.et_pw);
         btnlogin = findViewById(R.id.btn_login);
-        info = findViewById(R.id.info_btn);
-        info.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
-
-            private void openDialog() {
-                dialog dial = new dialog();
-                dial.show(getSupportFragmentManager(),"dial");
-            }
-        });
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
 
@@ -68,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (text_pw.length()==0) {
                     pw.setError("Enter password");
                 } else {
-                    AndroidNetworking.post("http://sales-report.smkrus.com/api/login")
+                    AndroidNetworking.post(Constants.BASE_URL + "/api/login")
                             .addBodyParameter("email", text_email)
                             .addBodyParameter("password", text_pw)
                             .setPriority(Priority.MEDIUM)
@@ -87,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 editor.putString("name", email.getText().toString())
                                                         .putLong("id", id);
                                                 editor.apply();
-                                                Intent intent = new Intent(getApplication(), MainActivity.class);
+                                                Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                                                 startActivity(intent);
                                                 finish();
                                             } else {

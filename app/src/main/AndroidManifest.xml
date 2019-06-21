@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -16,28 +15,19 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".DetailJobActivity"
-            android:parentActivityName=".MainActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.DetailJobActivity"/>
         <activity
-            android:name=".SplashActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/kosong">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Kontrol" />
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/kosong" />
-        <activity
-            android:name=".MainActivity"
-            android:theme="@style/kosong"></activity>
-        <activity android:name=".intromanager" />
-        <activity android:name=".MainActivity3" />
-
+            android:name=".ui.LoginActivity"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -50,7 +40,9 @@
 
         <activity
             android:name=".FormRecord"
-            android:parentActivityName=".DetailJobActivity" />
+            android:parentActivityName=".ui.DetailJobActivity" />
+        <activity android:name=".ui.DashboardActivity" />
+        <activity android:name=".ui.JobsActivity" />
     </application>
 
 </manifest>

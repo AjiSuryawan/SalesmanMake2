@@ -541,5 +541,9 @@ public class FormRecord extends AppCompatActivity {
 //        textViewTime.setText(num);
 //    }
 
-
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
 }

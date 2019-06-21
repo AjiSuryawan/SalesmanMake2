@@ -10,21 +10,21 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item android:state_pressed="true">
+<job android:state_pressed="true">
     <shape android:shape="rectangle">
         <solid android:color="#E87722" />
         <corners android:radius="10dp" />
 
     </shape>
 
-</item>
-<item>
+</job>
+<job>
     <shape android:shape="rectangle">
         <stroke android:color="#E87722"/>
         <stroke android:width="2dp"/>
         <corners android:radius="10dp" />
     </shape>
 
-</item>
+</job>
 
 </selector>
