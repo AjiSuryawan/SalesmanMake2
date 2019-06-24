@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FAF7F7"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileFragment">
+    tools:context=".UserProfile">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
