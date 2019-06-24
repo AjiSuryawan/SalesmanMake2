@@ -1,9 +1,12 @@
-package rpl2016_17.example.com.salesmanmake2;
+package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+
+import rpl2016_17.example.com.salesmanmake2.R;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -21,8 +24,15 @@ public class SplashActivity extends AppCompatActivity {
              */
             @Override
             public void run() {
-                Intent i = new Intent(SplashActivity.this.getApplicationContext(), intromanager.class);
-                startActivity(i);
+                SharedPreferences prefs = getSharedPreferences("login", MODE_PRIVATE);
+                String restoredText = prefs.getString("name", "");
+                if (restoredText == "") {
+                    Intent intent = new Intent(getApplication(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplication(), DashboardActivity.class);
+                    startActivity(intent);
+                }
                 finish();
             }
         }, SPLASH_TIME_OUT);

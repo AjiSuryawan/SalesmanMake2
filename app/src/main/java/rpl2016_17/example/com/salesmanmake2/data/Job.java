@@ -1,13 +1,16 @@
-package rpl2016_17.example.com.salesmanmake2;
+package rpl2016_17.example.com.salesmanmake2.data;
 
-public class Item {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Job implements Parcelable {
     private int id;
     private String description;
     private String shop_name;
     private String shop_address;
     private String shop_phone;
 
-    public Item() {
+    public Job() {
         this.id = id;
         this.description = description;
         this.shop_name = shop_name;
@@ -16,6 +19,25 @@ public class Item {
     }
 
 
+    protected Job(Parcel in) {
+        id = in.readInt();
+        description = in.readString();
+        shop_name = in.readString();
+        shop_address = in.readString();
+        shop_phone = in.readString();
+    }
+
+    public static final Creator<Job> CREATOR = new Creator<Job>() {
+        @Override
+        public Job createFromParcel(Parcel in) {
+            return new Job(in);
+        }
+
+        @Override
+        public Job[] newArray(int size) {
+            return new Job[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -55,5 +77,19 @@ public class Item {
 
     public void setShop_phone(String shop_phone) {
         this.shop_phone = shop_phone;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(description);
+        dest.writeString(shop_name);
+        dest.writeString(shop_address);
+        dest.writeString(shop_phone);
     }
 }
