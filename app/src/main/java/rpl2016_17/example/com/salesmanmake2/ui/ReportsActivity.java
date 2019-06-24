@@ -1,4 +1,4 @@
-package rpl2016_17.example.com.salesmanmake2;
+package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +11,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
@@ -22,10 +21,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import rpl2016_17.example.com.salesmanmake2.adapter.ListAdapter;
+import rpl2016_17.example.com.salesmanmake2.Constants;
+import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.adapter.ReportsAdapter;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
-import rpl2016_17.example.com.salesmanmake2.ui.JobsActivity;
 
 public class ReportsActivity extends AppCompatActivity {
     private RecyclerView rvJobs;

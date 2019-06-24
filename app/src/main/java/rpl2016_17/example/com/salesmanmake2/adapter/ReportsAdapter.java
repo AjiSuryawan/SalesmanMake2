@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import rpl2016_17.example.com.salesmanmake2.DetailReportsActivity;
+import rpl2016_17.example.com.salesmanmake2.ui.DetailReportsActivity;
 import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
 

@@ -1,4 +1,4 @@
-package rpl2016_17.example.com.salesmanmake2;
+package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONObject;
 
+import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
 
 public class DetailReportsActivity extends AppCompatActivity {

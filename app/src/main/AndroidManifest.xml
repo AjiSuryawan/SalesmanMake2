@@ -18,8 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DetailReportsActivity"></activity>
-        <activity android:name=".ReportsActivity" />
+        <activity android:name=".ui.DetailReportsActivity"></activity>
+        <activity android:name=".ui.ReportsActivity" />
         <activity android:name=".ui.DetailJobActivity" />
         <activity
             android:name=".ui.SplashActivity"

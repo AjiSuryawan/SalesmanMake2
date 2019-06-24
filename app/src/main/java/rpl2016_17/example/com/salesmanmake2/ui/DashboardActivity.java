@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,9 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import rpl2016_17.example.com.salesmanmake2.FormRecord;
 import rpl2016_17.example.com.salesmanmake2.R;
-import rpl2016_17.example.com.salesmanmake2.ReportsActivity;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -39,6 +39,9 @@ public class DashboardActivity extends AppCompatActivity {
     private ImageView ivLogout;
     private static final int TIME_LIMIT = 1500;
     private static long backPressed;
+    private ProgressDialog mProgress;
+    private static final String ofline = "Anda Sedang Offline";
+    SwipeRefreshLayout swipeLayout;
 
 
     @Override
@@ -52,10 +55,35 @@ public class DashboardActivity extends AppCompatActivity {
         cardJobs = findViewById(R.id.card_jobs);
         cardReports = findViewById(R.id.card_reports);
         ivLogout = findViewById(R.id.iv_logout);
+        swipeLayout = findViewById(R.id.swipe_container);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Loading...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
 
         preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
+        mProgress.show();
         fetchProfile();
+        mProgress.dismiss();
+
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code here
+                fetchProfile();
+                // To keep animation for 4 seconds
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        // Stop animation (This will be after 3 seconds)
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 3000);
+                Toast.makeText(getApplicationContext(), "Profile is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+            }
+        });
 
         /** click listener */
         ivLogout.setOnClickListener(new View.OnClickListener() {
@@ -119,11 +147,12 @@ public class DashboardActivity extends AppCompatActivity {
                                 } else {
                                     JSONObject errorObj = response.getJSONObject("error");
                                     String message = errorObj.getString("message");
-                                  Toast.makeText(DashboardActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                                  Toast.makeText(DashboardActivity.this, ofline, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(DashboardActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DashboardActivity.this, ofline, Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -132,7 +161,7 @@ public class DashboardActivity extends AppCompatActivity {
                     public void onError(ANError error) {
                         error.printStackTrace();
                         Log.e(TAG, "onError: " + error.getErrorCode());
-                        Toast.makeText(DashboardActivity.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DashboardActivity.this, ofline, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -76,7 +76,7 @@ public class JobsActivity extends AppCompatActivity {
                         swipeLayout.setRefreshing(false);
                     }
                 }, 3000);
-                Toast.makeText(getApplicationContext(), "Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+                Toast.makeText(getApplicationContext(), "Job is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
             }
         });
 
