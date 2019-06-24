@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import rpl2016_17.example.com.salesmanmake2.R;
+import rpl2016_17.example.com.salesmanmake2.ReportsActivity;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -54,7 +55,13 @@ public class DashboardActivity extends AppCompatActivity {
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.apply();
+                Intent i = new Intent(getApplicationContext(),SplashActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -70,8 +77,8 @@ public class DashboardActivity extends AppCompatActivity {
         cardReports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(this, '');
-//                startActivity(intent);
+                Intent intent = new Intent(DashboardActivity.this, ReportsActivity.class);
+                startActivity(intent);
             }
         });
     }
