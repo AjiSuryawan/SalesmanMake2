@@ -123,7 +123,7 @@
                 android:textSize="@dimen/_14ssp" />
 
             <TextView
-                android:id="@+id/tv_description"
+                android:id="@+id/tv_detail_job"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"

@@ -24,7 +24,7 @@
                 app:title="Rincian Pekerjaan" />
 
             <TextView
-                android:id="@+id/tv_status"
+                android:id="@+id/tv_shop_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"

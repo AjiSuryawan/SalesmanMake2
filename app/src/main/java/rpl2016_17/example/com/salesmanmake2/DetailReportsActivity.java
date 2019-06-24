@@ -25,7 +25,7 @@ public class DetailReportsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Rincian Pekerjaan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView tvNama = findViewById(R.id.tv_shop_name);
+        TextView tvNama = findViewById(R.id.tv_shop_name2);
         TextView tvLokasi = findViewById(R.id.tv_location);
         TextView tvTanggal = findViewById(R.id.tv_created_at);
         TextView tvDeskripsi = findViewById(R.id.tv_detail_job);

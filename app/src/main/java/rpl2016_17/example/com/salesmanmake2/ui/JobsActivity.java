@@ -69,7 +69,6 @@ public class JobsActivity extends AppCompatActivity {
             public void onRefresh() {
                 // Your code here
                 fetchJobs();
-
                 // To keep animation for 4 seconds
                 new Handler().postDelayed(new Runnable() {
                     @Override public void run() {

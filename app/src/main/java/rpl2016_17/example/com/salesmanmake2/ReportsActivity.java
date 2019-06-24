@@ -72,7 +72,6 @@ public class ReportsActivity extends AppCompatActivity {
                                     item.setProof_image(job.getString("proof_image"));
                                     jobList.add(item);
                                     Log.e("", "onResponse: " + jobList.size());
-
                                 }
                                 jobsAdapter.notifyDataSetChanged();
 
