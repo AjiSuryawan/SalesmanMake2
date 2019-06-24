@@ -2,10 +2,12 @@ package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import rpl2016_17.example.com.salesmanmake2.FormRecord;
 import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.ReportsActivity;
 
@@ -34,6 +37,9 @@ public class DashboardActivity extends AppCompatActivity {
     private CircleImageView ivProfile;
     private LinearLayout cardJobs, cardReports;
     private ImageView ivLogout;
+    private static final int TIME_LIMIT = 1500;
+    private static long backPressed;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,13 +61,21 @@ public class DashboardActivity extends AppCompatActivity {
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.clear();
-                editor.apply();
-                Intent i = new Intent(getApplicationContext(),SplashActivity.class);
-                startActivity(i);
-                finish();
+
+                new AlertDialog.Builder(DashboardActivity.this)
+                        .setMessage("Apakah anda yakin ingin keluar ?")
+                        .setNegativeButton("Tidak", null)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.clear();
+                                editor.apply();
+                                Intent i = new Intent(getApplicationContext(),SplashActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        }).create().show();
             }
         });
 
@@ -121,5 +135,15 @@ public class DashboardActivity extends AppCompatActivity {
                         Toast.makeText(DashboardActivity.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (TIME_LIMIT + backPressed > System.currentTimeMillis()){
+            super.onBackPressed();;
+        }else {
+            Toast.makeText(getApplicationContext(),"Tekan lagi untuk keluar",Toast.LENGTH_SHORT).show();
+        }
+        backPressed =System.currentTimeMillis();
     }
 }

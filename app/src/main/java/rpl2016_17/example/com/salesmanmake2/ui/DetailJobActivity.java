@@ -1,13 +1,25 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import rpl2016_17.example.com.salesmanmake2.Constants;
 import rpl2016_17.example.com.salesmanmake2.FormRecord;
 import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
@@ -61,4 +73,5 @@ public class DetailJobActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
 }
