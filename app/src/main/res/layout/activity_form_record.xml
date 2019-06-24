@@ -76,7 +76,15 @@
                 android:id="@+id/buttonSelect"
                 android:background="@drawable/btnshapes"
                 android:layout_margin="10dp"
+                />
 
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Signature"
+                android:id="@+id/btn_Signature"
+                android:background="@drawable/btnshapes"
+                android:layout_margin="10dp"
                 />
 
             <ImageView
@@ -111,19 +119,6 @@
                 android:fontFamily="sans-serif-light"
                 android:layout_marginBottom="22dp"
                 android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/dummyttd"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:text="TTD SALES"
-                android:layout_gravity="center_horizontal"
-                android:textColor="#000"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:background="#fff"
-                android:fontFamily="sans-serif-light"
-                android:layout_marginBottom="22dp"/>
 
             <Button
                 android:id="@+id/buttonUpload"

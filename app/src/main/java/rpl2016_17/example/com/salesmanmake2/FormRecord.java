@@ -1,12 +1,16 @@
 package rpl2016_17.example.com.salesmanmake2;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -28,6 +32,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.interfaces.UploadProgressListener;
+import com.github.gcacace.signaturepad.views.SignaturePad;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -55,7 +68,7 @@ import javax.net.ssl.HttpsURLConnection;
 public class FormRecord extends AppCompatActivity {
     private String cameraFilePath;
 
-    Button GetImageFromGalleryButton, UploadImageOnServerButton;
+    Button GetImageFromGalleryButton, UploadImageOnServerButton, UploadSignature;
 
     ImageView ShowSelectedImage;
 
@@ -120,6 +133,8 @@ public class FormRecord extends AppCompatActivity {
 
         UploadImageOnServerButton = (Button) findViewById(R.id.buttonUpload);
 
+        UploadSignature = (Button) findViewById(R.id.btn_Signature);
+
         ShowSelectedImage = (ImageView) findViewById(R.id.imageView);
 
         imageName = (EditText) findViewById(R.id.nameitems);
@@ -129,11 +144,14 @@ public class FormRecord extends AppCompatActivity {
         GetImageFromGalleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 showPictureDialog();
+            }
+        });
 
-
-
+        UploadSignature.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSignatureDialog();
             }
         });
 
@@ -149,8 +167,31 @@ public class FormRecord extends AppCompatActivity {
                         .setMessage("Apakah anda yakin ingin save data ?")
                         .setNegativeButton("Tidak", null)
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-
                             public void onClick(DialogInterface arg0, int arg1) {
+
+                                // kirim datanya
+//                                AndroidNetworking.upload(Constants.BASE_URL + "/api/report/send")
+////                                      .addMultipartFile("image",file)
+//                                        .addMultipartParameter("key","value")
+//                                        .setTag("uploadTest")
+//                                        .setPriority(Priority.HIGH)
+//                                        .build()
+//                                        .setUploadProgressListener(new UploadProgressListener() {
+//                                            @Override
+//                                            public void onProgress(long bytesUploaded, long totalBytes) {
+//                                                // do anything with progress
+//                                            }
+//                                        })
+//                                        .getAsJSONObject(new JSONObjectRequestListener() {
+//                                            @Override
+//                                            public void onResponse(JSONObject response) {
+//                                                // do anything with response
+//                                            }
+//                                            @Override
+//                                            public void onError(ANError error) {
+//                                                // handle error
+//                                            }
+//                                        });
                                 finish();
                             }
                         }).create().show();
@@ -158,6 +199,7 @@ public class FormRecord extends AppCompatActivity {
 
             }
         });
+
 
         if (ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -540,6 +582,34 @@ public class FormRecord extends AppCompatActivity {
 //    private void display(String num) {
 //        textViewTime.setText(num);
 //    }
+
+    private void showSignatureDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog_signature);
+        final SignaturePad signaturePad = dialog.findViewById(R.id.signature_pad);
+        Button btnApply = dialog.findViewById(R.id.btn_apply);
+        btnApply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bitmap signatureBitmap = signaturePad.getTransparentSignatureBitmap(true);
+                drawSignatureOnImage(signatureBitmap);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void drawSignatureOnImage(Bitmap signature) {
+        int w = FixBitmap.getWidth();
+        int h = FixBitmap.getHeight();
+        Bitmap result = Bitmap.createBitmap(w, h, FixBitmap.getConfig());
+        Canvas canvas = new Canvas(result);
+        canvas.drawBitmap(FixBitmap, 0f, 0f, null);
+        canvas.drawBitmap(signature, 100f, 100f, null);
+
+        ShowSelectedImage.setImageBitmap(result);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

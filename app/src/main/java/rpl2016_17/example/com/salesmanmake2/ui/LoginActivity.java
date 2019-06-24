@@ -1,7 +1,11 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnlogin;
     String text_email, text_pw;
     private static final String MY_PREFS_NAME = "login";
+    private ProgressDialog mProgress;
 
 //    public String emailku = email.getText().toString();
 //    public String pwku = pw.getText().toString();
@@ -40,22 +45,32 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         email = findViewById(R.id.et_email);
         pw = findViewById(R.id.et_pw);
         btnlogin = findViewById(R.id.btn_login);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
 
         btnlogin.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View view) {
+                mProgress.show();
                 text_email = email.getText().toString();
                 text_pw = pw.getText().toString();
                 if (text_email.length()==0) {
                     email.setError("Enter email");
+                    mProgress.dismiss();
                 } else if (text_pw.length()==0) {
                     pw.setError("Enter password");
-                } else {
+                    mProgress.dismiss();
+                }else {
                     AndroidNetworking.post(Constants.BASE_URL + "/api/login")
                             .addBodyParameter("email", text_email)
                             .addBodyParameter("password", text_pw)
@@ -75,16 +90,19 @@ public class LoginActivity extends AppCompatActivity {
                                                 editor.putString("name", email.getText().toString())
                                                         .putLong("id", id);
                                                 editor.apply();
+                                                mProgress.dismiss();
                                                 Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
                                                 startActivity(intent);
                                                 finish();
                                             } else {
+                                                mProgress.dismiss();
                                                 JSONObject errorObj = response.getJSONObject("error");
                                                 String message = errorObj.getString("message");
                                                 Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();
+                                            mProgress.dismiss();
                                         }
                                     }
                                 }
@@ -93,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onError(ANError error) {
                                     Log.e(TAG, "onError: " + error.getLocalizedMessage());
                                     Toast.makeText(LoginActivity.this, error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                    mProgress.dismiss();
                                 }
                             });
 
@@ -102,6 +121,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void connection() {
 
     }
 }

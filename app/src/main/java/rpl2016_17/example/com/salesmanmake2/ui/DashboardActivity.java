@@ -1,5 +1,6 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,6 +63,7 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(DashboardActivity.this, JobsActivity.class);
                 startActivity(intent);
+
             }
         });
 

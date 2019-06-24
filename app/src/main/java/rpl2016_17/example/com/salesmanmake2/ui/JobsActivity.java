@@ -1,9 +1,12 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +37,9 @@ public class JobsActivity extends AppCompatActivity {
     private ListAdapter jobsAdapter;
     private List<Job> jobList = new ArrayList<>();
     private Toolbar toolbar;
+    SwipeRefreshLayout swipeLayout;
+    private ProgressDialog mProgress;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,8 +52,39 @@ public class JobsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rvJobs = findViewById(R.id.rv_list);
-        setupRecyclerJobs();
+        swipeLayout = findViewById(R.id.swipe_container);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
+        mProgress.show();
         fetchJobs();
+        mProgress.dismiss();
+
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code here
+                fetchJobs();
+
+                // To keep animation for 4 seconds
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        // Stop animation (This will be after 3 seconds)
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 3000);
+                Toast.makeText(getApplicationContext(), "Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+            }
+        });
+
+
+        setupRecyclerJobs();
+
+
     }
 
     private void setupRecyclerJobs(){
