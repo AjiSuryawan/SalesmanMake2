@@ -53,7 +53,13 @@ public class DashboardActivity extends AppCompatActivity {
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.apply();
+                Intent i = new Intent(getApplicationContext(),SplashActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 

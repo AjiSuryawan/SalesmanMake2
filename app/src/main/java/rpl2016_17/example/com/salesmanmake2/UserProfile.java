@@ -1,11 +1,14 @@
 package rpl2016_17.example.com.salesmanmake2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import rpl2016_17.example.com.salesmanmake2.ui.SplashActivity;
 
 public class UserProfile extends AppCompatActivity {
     private static final String MY_PREFS_NAME = "login";
@@ -23,6 +26,8 @@ public class UserProfile extends AppCompatActivity {
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear();
                 editor.apply();
+                Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
