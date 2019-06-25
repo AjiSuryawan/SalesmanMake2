@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 mProgress.dismiss();
                                                 JSONObject errorObj = response.getJSONObject("error");
                                                 String message = errorObj.getString("message");
-                                                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                                             }
                                         } catch (JSONException e) {
                                             e.printStackTrace();

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -40,12 +41,15 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.UploadProgressListener;
 import com.github.gcacace.signaturepad.views.SignaturePad;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -64,6 +68,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import rpl2016_17.example.com.salesmanmake2.data.Job;
+import rpl2016_17.example.com.salesmanmake2.ui.JobsActivity;
 
 public class FormRecord extends AppCompatActivity {
     private String cameraFilePath;
@@ -116,6 +123,9 @@ public class FormRecord extends AppCompatActivity {
     LocationManager locationManager;
     String lattitude,longitude;
 
+    private File selectedImageFile = null;
+    private ProgressDialog mProgress;
+
 
 
     @Override
@@ -128,6 +138,12 @@ public class FormRecord extends AppCompatActivity {
         getSupportActionBar().setTitle("Input Data");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
 
         GetImageFromGalleryButton = (Button) findViewById(R.id.buttonSelect);
 
@@ -137,7 +153,6 @@ public class FormRecord extends AppCompatActivity {
 
         ShowSelectedImage = (ImageView) findViewById(R.id.imageView);
 
-        imageName = (EditText) findViewById(R.id.nameitems);
 
         byteArrayOutputStream = new ByteArrayOutputStream();
 
@@ -168,31 +183,10 @@ public class FormRecord extends AppCompatActivity {
                         .setNegativeButton("Tidak", null)
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
-
                                 // kirim datanya
-//                                AndroidNetworking.upload(Constants.BASE_URL + "/api/report/send")
-////                                      .addMultipartFile("image",file)
-//                                        .addMultipartParameter("key","value")
-//                                        .setTag("uploadTest")
-//                                        .setPriority(Priority.HIGH)
-//                                        .build()
-//                                        .setUploadProgressListener(new UploadProgressListener() {
-//                                            @Override
-//                                            public void onProgress(long bytesUploaded, long totalBytes) {
-//                                                // do anything with progress
-//                                            }
-//                                        })
-//                                        .getAsJSONObject(new JSONObjectRequestListener() {
-//                                            @Override
-//                                            public void onResponse(JSONObject response) {
-//                                                // do anything with response
-//                                            }
-//                                            @Override
-//                                            public void onError(ANError error) {
-//                                                // handle error
-//                                            }
-//                                        });
-                                finish();
+                                mProgress.show();
+                                senData();
+                                mProgress.dismiss();
                             }
                         }).create().show();
 
@@ -330,6 +324,7 @@ public class FormRecord extends AppCompatActivity {
         } else if (requestCode == CAMERA) {
 //            FixBitmap = (Bitmap) data.getExtras().get("data");
             Log.e("", "onActivityResult: " + cameraFilePath );
+            selectedImageFile = new File(cameraFilePath);
             ShowSelectedImage.setImageURI(Uri.parse(cameraFilePath));
             try {
                 FixBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(cameraFilePath));
@@ -615,5 +610,43 @@ public class FormRecord extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    private void senData (){
+        SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+        AndroidNetworking.upload(Constants.BASE_URL + "/api/report/send")
+                .addMultipartFile("proof_image", selectedImageFile)
+                .addMultipartParameter("job_id",String.valueOf(preferences.getLong("id", 0)))
+                .addMultipartParameter("location", longitude + ";" + lattitude)
+                .setPriority(Priority.HIGH)
+                .build()
+                .setUploadProgressListener(new UploadProgressListener() {
+                    @Override
+                    public void onProgress(long bytesUploaded, long totalBytes) {
+                        // do anything with progress
+                    }
+                })
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        try {
+                            if (response.getBoolean("success")) {
+                               //tost
+                                Toast.makeText(getApplicationContext(), "Laporan berhasil dikirim", Toast.LENGTH_SHORT).show();
+
+                            }else{//toast gagal
+                                Toast.makeText(getApplicationContext(), "Laporan gagal dikirim", Toast.LENGTH_SHORT).show();
+                                 }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(FormRecord.this, Constants.EROR, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                    }
+                });
     }
 }
