@@ -1,7 +1,10 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +34,8 @@ public class ReportsActivity extends AppCompatActivity {
     private ReportsAdapter jobsAdapter;
     private List<Job> jobList = new ArrayList<>();
     private Toolbar toolbar;
+    SwipeRefreshLayout swipeLayout;
+    private ProgressDialog mProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +47,35 @@ public class ReportsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rvJobs = findViewById(R.id.rv_list2);
-        setupRecyclerJobs();
+        swipeLayout = findViewById(R.id.swipe_container);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Processing...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
+
+        mProgress.show();
         fetchJobs();
+        mProgress.dismiss();
+
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code here
+                fetchJobs();
+                // To keep animation for 4 seconds
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        // Stop animation (This will be after 3 seconds)
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 3000);
+                Toast.makeText(getApplicationContext(), "Reports is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+            }
+        });
+        setupRecyclerJobs();
+
     }
 
     private void fetchJobs() {
@@ -108,7 +140,7 @@ public class ReportsActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(ReportsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ReportsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -116,7 +148,7 @@ public class ReportsActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError anError) {
                         Log.e("", "onError: " + anError.getErrorBody());
-                        Toast.makeText(ReportsActivity.this, anError.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ReportsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                     }
                 });
 
