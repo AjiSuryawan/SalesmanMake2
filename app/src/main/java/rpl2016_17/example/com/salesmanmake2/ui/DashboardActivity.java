@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.SyncStateContract;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import rpl2016_17.example.com.salesmanmake2.Constants;
 import rpl2016_17.example.com.salesmanmake2.R;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -40,7 +42,7 @@ public class DashboardActivity extends AppCompatActivity {
     private static final int TIME_LIMIT = 1500;
     private static long backPressed;
     private ProgressDialog mProgress;
-    private static final String ofline = "Anda Sedang Offline";
+
     SwipeRefreshLayout swipeLayout;
 
 
@@ -148,11 +150,11 @@ public class DashboardActivity extends AppCompatActivity {
                                     JSONObject errorObj = response.getJSONObject("error");
                                     String message = errorObj.getString("message");
 
-                                  Toast.makeText(DashboardActivity.this, ofline, Toast.LENGTH_SHORT).show();
+                                  Toast.makeText(DashboardActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(DashboardActivity.this, ofline, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DashboardActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -161,7 +163,7 @@ public class DashboardActivity extends AppCompatActivity {
                     public void onError(ANError error) {
                         error.printStackTrace();
                         Log.e(TAG, "onError: " + error.getErrorCode());
-                        Toast.makeText(DashboardActivity.this, ofline, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DashboardActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                     }
                 });
     }

@@ -122,7 +122,7 @@ public class JobsActivity extends AppCompatActivity {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(JobsActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -130,7 +130,7 @@ public class JobsActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError anError) {
                         Log.e("", "onError: " + anError.getErrorBody());
-                        Toast.makeText(JobsActivity.this, anError.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                     }
                 });
 
