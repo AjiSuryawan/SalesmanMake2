@@ -47,23 +47,11 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class FormRecord extends AppCompatActivity {
     private String cameraFilePath;
@@ -112,10 +100,9 @@ public class FormRecord extends AppCompatActivity {
 
     private static final int REQUEST_LOCATION = 1;
     Button button;
-    TextView textViewLoc , textViewTime;
+    TextView textViewLoc, textViewTime;
     LocationManager locationManager;
-    String lattitude,longitude;
-
+    String lattitude, longitude;
 
 
     @Override
@@ -163,36 +150,37 @@ public class FormRecord extends AppCompatActivity {
                 GetImageNameFromEditText = "makan";
 
                 new AlertDialog.Builder(FormRecord.this)
-                        .setTitle("Save data")
-                        .setMessage("Apakah anda yakin ingin save data ?")
+                        .setTitle("Kirim Laporan")
+                        .setMessage("Apakah anda yakin ingin mengirim laporan ?")
                         .setNegativeButton("Tidak", null)
                         .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface arg0, int arg1) {
 
-                                // kirim datanya
-//                                AndroidNetworking.upload(Constants.BASE_URL + "/api/report/send")
-////                                      .addMultipartFile("image",file)
-//                                        .addMultipartParameter("key","value")
-//                                        .setTag("uploadTest")
-//                                        .setPriority(Priority.HIGH)
-//                                        .build()
-//                                        .setUploadProgressListener(new UploadProgressListener() {
-//                                            @Override
-//                                            public void onProgress(long bytesUploaded, long totalBytes) {
-//                                                // do anything with progress
-//                                            }
-//                                        })
-//                                        .getAsJSONObject(new JSONObjectRequestListener() {
-//                                            @Override
-//                                            public void onResponse(JSONObject response) {
-//                                                // do anything with response
-//                                            }
-//                                            @Override
-//                                            public void onError(ANError error) {
-//                                                // handle error
-//                                            }
-//                                        });
-                                finish();
+                                AndroidNetworking.upload(Constants.BASE_URL + "/api/report/send")
+                                        .addMultipartFile("proof_image", new File(cameraFilePath))
+                                        .addMultipartParameter("job_id", "1")
+                                        .addMultipartParameter("location", lattitude + longitude)
+                                        .addMultipartParameter("description", "lorem ipsum")
+                                        .setPriority(Priority.HIGH)
+                                        .build()
+                                        .setUploadProgressListener(new UploadProgressListener() {
+                                            @Override
+                                            public void onProgress(long bytesUploaded, long totalBytes) {
+                                                // do anything with progress
+                                            }
+                                        })
+                                        .getAsJSONObject(new JSONObjectRequestListener() {
+                                            @Override
+                                            public void onResponse(JSONObject response) {
+                                                Toast.makeText(FormRecord.this, "Successs", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            @Override
+                                            public void onError(ANError error) {
+                                                Toast.makeText(FormRecord.this, "Error", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                             }
                         }).create().show();
 
@@ -201,7 +189,7 @@ public class FormRecord extends AppCompatActivity {
         });
 
 
-        if (ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) {
+        if (ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(FormRecord.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         5);
@@ -210,9 +198,9 @@ public class FormRecord extends AppCompatActivity {
 
 
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        textViewLoc = (TextView)findViewById(R.id.tv_lokasi);
-        button = (Button)findViewById(R.id.buttonSelect);
-       textViewTime = (TextView)findViewById(R.id.tv_waktu);
+        textViewLoc = (TextView) findViewById(R.id.tv_lokasi);
+        button = (Button) findViewById(R.id.buttonSelect);
+        textViewTime = (TextView) findViewById(R.id.tv_waktu);
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy. 'at' HH:mm:ss z");
         String currentDateandTime = sdf.format(new Date());
@@ -286,12 +274,12 @@ public class FormRecord extends AppCompatActivity {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         try {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", createImageFile()));
-            Log.e("", "putExtra: " );
+            Log.e("", "putExtra: ");
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("", "ioexception: " + e.getLocalizedMessage() );
+            Log.e("", "ioexception: " + e.getLocalizedMessage());
         }
-        Log.e("", "takePhotoFromCamera: " );
+        Log.e("", "takePhotoFromCamera: ");
         startActivityForResult(intent, CAMERA);
     }
 
@@ -329,7 +317,7 @@ public class FormRecord extends AppCompatActivity {
 
         } else if (requestCode == CAMERA) {
 //            FixBitmap = (Bitmap) data.getExtras().get("data");
-            Log.e("", "onActivityResult: " + cameraFilePath );
+            Log.e("", "onActivityResult: " + cameraFilePath);
             ShowSelectedImage.setImageURI(Uri.parse(cameraFilePath));
             try {
                 FixBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.parse(cameraFilePath));
@@ -351,7 +339,6 @@ public class FormRecord extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -365,85 +352,6 @@ public class FormRecord extends AppCompatActivity {
 
             }
         }
-    }
-
-    public class ImageProcessClass {
-
-        public String ImageHttpRequest(String requestURL, HashMap<String, String> PData) {
-
-            StringBuilder stringBuilder = new StringBuilder();
-
-            try {
-                url = new URL(requestURL);
-
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-
-                httpURLConnection.setReadTimeout(20000);
-
-                httpURLConnection.setConnectTimeout(20000);
-
-                httpURLConnection.setRequestMethod("POST");
-
-                httpURLConnection.setDoInput(true);
-
-                httpURLConnection.setDoOutput(true);
-
-                outputStream = httpURLConnection.getOutputStream();
-
-                bufferedWriter = new BufferedWriter(
-
-                        new OutputStreamWriter(outputStream, "UTF-8"));
-
-                bufferedWriter.write(bufferedWriterDataFN(PData));
-
-                bufferedWriter.flush();
-
-                bufferedWriter.close();
-
-                outputStream.close();
-
-                RC = httpURLConnection.getResponseCode();
-
-                if (RC == HttpsURLConnection.HTTP_OK) {
-
-                    bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-
-                    stringBuilder = new StringBuilder();
-
-                    String RC2;
-
-                    while ((RC2 = bufferedReader.readLine()) != null) {
-
-                        stringBuilder.append(RC2);
-                    }
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return stringBuilder.toString();
-        }
-
-        private String bufferedWriterDataFN(HashMap<String, String> HashMapParams) throws UnsupportedEncodingException {
-
-            stringBuilder = new StringBuilder();
-
-            for (Map.Entry<String, String> KEY : HashMapParams.entrySet()) {
-                if (check)
-                    check = false;
-                else
-                    stringBuilder.append("&");
-
-                stringBuilder.append(URLEncoder.encode(KEY.getKey(), "UTF-8"));
-
-                stringBuilder.append("=");
-
-                stringBuilder.append(URLEncoder.encode(KEY.getValue(), "UTF-8"));
-            }
-
-            return stringBuilder.toString();
-        }
-
     }
 
     private File createImageFile() throws IOException {
@@ -477,7 +385,7 @@ public class FormRecord extends AppCompatActivity {
 
             Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            Location location2 = locationManager.getLastKnownLocation(LocationManager. PASSIVE_PROVIDER);
+            Location location2 = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
             if (location != null) {
                 double latti = location.getLatitude();
@@ -488,7 +396,7 @@ public class FormRecord extends AppCompatActivity {
                 textViewLoc.setVisibility(View.VISIBLE);
                 textViewTime.setVisibility(View.VISIBLE);
 
-                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
+                textViewLoc.setText("Your current location is :" + "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
 
                 textViewLoc.setOnClickListener(new View.OnClickListener() {
@@ -498,7 +406,7 @@ public class FormRecord extends AppCompatActivity {
                     }
                 });
 
-            } else  if (location1 != null) {
+            } else if (location1 != null) {
                 double latti = location1.getLatitude();
                 double longi = location1.getLongitude();
                 lattitude = String.valueOf(latti);
@@ -506,7 +414,7 @@ public class FormRecord extends AppCompatActivity {
                 textViewLoc.setVisibility(View.VISIBLE);
                 textViewTime.setVisibility(View.VISIBLE);
 
-                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
+                textViewLoc.setText("Your current location is :" + "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
 
                 textViewLoc.setOnClickListener(new View.OnClickListener() {
@@ -517,15 +425,14 @@ public class FormRecord extends AppCompatActivity {
                 });
 
 
-            } else  if (location2 != null) {
+            } else if (location2 != null) {
                 double latti = location2.getLatitude();
                 double longi = location2.getLongitude();
                 lattitude = String.valueOf(latti);
                 longitude = String.valueOf(longi);
                 textViewLoc.setVisibility(View.VISIBLE);
                 textViewTime.setVisibility(View.VISIBLE);
-//                "geo:"+lattitude+","+longitude;
-                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
+                textViewLoc.setText("Your current location is :" + "\n" + "Lattitude = " + lattitude
                         + "\n" + "Longitude = " + longitude);
 
                 textViewLoc.setOnClickListener(new View.OnClickListener() {
@@ -535,21 +442,17 @@ public class FormRecord extends AppCompatActivity {
                     }
                 });
 
-            }else{
+            } else {
 
-                Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Unble to Trace your location", Toast.LENGTH_SHORT).show();
 
             }
         }
     }
 
     private void maps() {
-
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        intent.setData(Uri.parse("geo:"+lattitude+","+longitude));
-//        startActivity(intent);
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("geo:?q="+lattitude+","+longitude));
+        intent.setData(Uri.parse("geo:?q=" + lattitude + "," + longitude));
         startActivity(intent);
     }
 
@@ -571,17 +474,6 @@ public class FormRecord extends AppCompatActivity {
         final AlertDialog alert = builder.create();
         alert.show();
     }
-
-//    public void getCurrentTime(View view) {
-//        Calendar calendar = Calendar.getInstance();
-//        SimpleDateFormat mdformat = new SimpleDateFormat("HH:mm:ss");
-//        String strDate = "Current Time : " + mdformat.format(calendar.getTime());
-//        display(strDate);
-//    }
-//
-//    private void display(String num) {
-//        textViewTime.setText(num);
-//    }
 
     private void showSignatureDialog() {
         final Dialog dialog = new Dialog(this);

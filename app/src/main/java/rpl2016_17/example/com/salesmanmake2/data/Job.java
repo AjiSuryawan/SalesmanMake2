@@ -26,30 +26,17 @@ public class Job implements Parcelable {
         this.shop_phone = shop_phone;
     }
 
-
     protected Job(Parcel in) {
         id = in.readInt();
-        location = in.readString();
-        proof_image = in.readString();
-        status = in.readString();
-        created_at = in.readString();
         description = in.readString();
         shop_name = in.readString();
+        status = in.readString();
+        location = in.readString();
+        created_at = in.readString();
+        proof_image = in.readString();
         shop_address = in.readString();
         shop_phone = in.readString();
     }
-
-    public static final Creator<Job> CREATOR = new Creator<Job>() {
-        @Override
-        public Job createFromParcel(Parcel in) {
-            return new Job(in);
-        }
-
-        @Override
-        public Job[] newArray(int size) {
-            return new Job[size];
-        }
-    };
 
     public int getId() {
         return id;
@@ -75,6 +62,38 @@ public class Job implements Parcelable {
         this.shop_name = shop_name;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getProof_image() {
+        return proof_image;
+    }
+
+    public void setProof_image(String proof_image) {
+        this.proof_image = proof_image;
+    }
+
     public String getShop_address() {
         return shop_address;
     }
@@ -91,37 +110,21 @@ public class Job implements Parcelable {
         this.shop_phone = shop_phone;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public static Creator<Job> getCREATOR() {
+        return CREATOR;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
+    public static final Creator<Job> CREATOR = new Creator<Job>() {
+        @Override
+        public Job createFromParcel(Parcel in) {
+            return new Job(in);
+        }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getProof_image() {
-        return proof_image;
-    }
-
-    public void setProof_image(String proof_image) {
-        this.proof_image = proof_image;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
+        @Override
+        public Job[] newArray(int size) {
+            return new Job[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -131,11 +134,11 @@ public class Job implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
-        dest.writeString(location);
-        dest.writeString(status);
-        dest.writeString(created_at);
         dest.writeString(description);
         dest.writeString(shop_name);
+        dest.writeString(status);
+        dest.writeString(location);
+        dest.writeString(created_at);
         dest.writeString(proof_image);
         dest.writeString(shop_address);
         dest.writeString(shop_phone);

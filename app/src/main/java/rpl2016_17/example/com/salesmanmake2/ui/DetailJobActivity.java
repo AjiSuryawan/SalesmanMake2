@@ -27,6 +27,7 @@ import rpl2016_17.example.com.salesmanmake2.data.Job;
 public class DetailJobActivity extends AppCompatActivity {
     private Button btnMakeReport;
     private Toolbar toolbar;
+    private static final String TAG = DetailJobActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,11 @@ public class DetailJobActivity extends AppCompatActivity {
             String address = job.getShop_address();
             String phone = job.getShop_phone();
             String desc = job.getDescription();
+
+            Log.e(TAG, "onCreate: " + name );
+            Log.e(TAG, "onCreate: " + phone );
+            Log.e(TAG, "onCreate: " + desc );
+            Log.e(TAG, "onCreate: " + address );
 
             tvNama.setText(name);
             tvAlamat.setText(address);
