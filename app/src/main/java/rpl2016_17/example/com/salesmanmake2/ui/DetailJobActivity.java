@@ -1,7 +1,6 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,18 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import rpl2016_17.example.com.salesmanmake2.Constants;
-import rpl2016_17.example.com.salesmanmake2.FormRecord;
 import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
 
@@ -44,17 +32,17 @@ public class DetailJobActivity extends AppCompatActivity {
         TextView tvNomor = findViewById(R.id.tv_shop_phone);
         TextView tvDeskripsi = findViewById(R.id.tv_detail_job);
 
+        final Job job = getIntent().getExtras().getParcelable("extra_job");
 
         btnMakeReport = findViewById(R.id.btn_make_report);
         btnMakeReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(DetailJobActivity.this, FormRecord.class);
+                Intent i = new Intent(DetailJobActivity.this, SendReportActivity.class);
+                i.putExtra("extra_job", job);
                 startActivity(i);
             }
         });
-
-        Job job = getIntent().getExtras().getParcelable("extra_job");
 
         if(job != null){
             String name = job.getShop_name();
