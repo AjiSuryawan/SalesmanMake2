@@ -26,6 +26,25 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="10dp">
+
+                <EditText
+                    android:id="@+id/et_Deskirpsi"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:hint="Keterangan Tambahan"
+                    android:inputType="text"/>
+
+            </android.support.design.widget.TextInputLayout>
+
 
             <Button
                 android:id="@+id/btn_pick_image"
@@ -51,7 +70,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/padding_10"
                 android:src="@mipmap/ic_launcher_round"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_kirim_laporan"

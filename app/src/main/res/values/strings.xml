@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SalesmanMake2</string>
+    <string name="app_name">Sales Report</string>
     <string name="nav_home">Home</string>
     <string name="nav_notif">Notification</string>
     <string name="nav_profile">Profile</string>
