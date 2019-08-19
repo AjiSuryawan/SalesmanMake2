@@ -25,8 +25,13 @@
         <activity
             android:name=".ui.SplashActivity"
             android:theme="@style/kosong">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            superadmin@smkrus.com
+            smkrus12345</activity>
         <activity android:name=".ui.LoginActivity" />
 
         <provider
@@ -40,14 +45,12 @@
                 android:resource="@xml/picker_provider_paths" />
         </provider>
 
-        <activity android:name=".ui.DashboardActivity" />
+        <activity android:name=".ui.DashboardActivity">
+
+        </activity>
         <activity android:name=".ui.JobsActivity" />
         <activity android:name=".ui.SendReportActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

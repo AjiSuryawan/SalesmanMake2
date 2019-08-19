@@ -14,7 +14,7 @@
             android:id="@+id/iv_bg_user"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_158sdp"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/bg_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

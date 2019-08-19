@@ -87,7 +87,7 @@ public class DashboardActivity extends AppCompatActivity {
             }
         });
 
-        /** click listener */
+
         ivLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +135,6 @@ public class DashboardActivity extends AppCompatActivity {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // do anything with response
                         if (response != null) {
                             try {
                                 boolean isSuccess = response.getBoolean("success");
