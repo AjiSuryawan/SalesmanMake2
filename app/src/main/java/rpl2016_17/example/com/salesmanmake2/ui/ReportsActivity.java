@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
@@ -66,7 +67,8 @@ public class ReportsActivity extends AppCompatActivity {
                 fetchJobs();
                 // To keep animation for 4 seconds
                 new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         // Stop animation (This will be after 3 seconds)
                         swipeLayout.setRefreshing(false);
                     }
@@ -75,14 +77,13 @@ public class ReportsActivity extends AppCompatActivity {
             }
         });
         setupRecyclerJobs();
-
     }
 
     private void fetchJobs() {
         SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         AndroidNetworking.get(Constants.BASE_URL + "/api/report/all/{id}")
-//                .addPathParameter("id", String.valueOf(preferences.getLong("id", 0)))
-//                .setPriority(Priority.HIGH)
+                .addPathParameter("id", String.valueOf(preferences.getLong("id", 0)))
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -115,7 +116,6 @@ public class ReportsActivity extends AppCompatActivity {
                                                     JSONObject payload = response.getJSONObject("payload");
                                                     JSONArray object = payload.getJSONArray("jobs");
                                                     jobList.clear();
-
                                                     for (int i = 0; i < jobs.length(); i++) {
                                                         JSONObject job = jobs.getJSONObject(i);
                                                         Job item = new Job();
@@ -124,7 +124,6 @@ public class ReportsActivity extends AppCompatActivity {
                                                         Log.e("", "onResponse: " + jobList.size());
                                                     }
                                                     jobsAdapter.notifyDataSetChanged();
-
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
@@ -159,7 +158,6 @@ public class ReportsActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
 
     private void setupRecyclerJobs() {
         jobsAdapter = new ReportsAdapter(this, jobList);

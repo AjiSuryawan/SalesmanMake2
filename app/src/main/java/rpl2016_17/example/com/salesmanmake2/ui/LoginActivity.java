@@ -30,21 +30,16 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = LoginActivity.class.getSimpleName();
     EditText email, pw;
-    ImageView info;
 
     Button btnlogin;
     String text_email, text_pw;
     private static final String MY_PREFS_NAME = "login";
     private ProgressDialog mProgress;
 
-//    public String emailku = email.getText().toString();
-//    public String pwku = pw.getText().toString();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
         email = findViewById(R.id.et_email);
         pw = findViewById(R.id.et_pw);
@@ -64,13 +59,13 @@ public class LoginActivity extends AppCompatActivity {
                 mProgress.show();
                 text_email = email.getText().toString();
                 text_pw = pw.getText().toString();
-                if (text_email.length()==0) {
+                if (text_email.length() == 0) {
                     email.setError("Enter email");
                     mProgress.dismiss();
-                } else if (text_pw.length()==0) {
+                } else if (text_pw.length() == 0) {
                     pw.setError("Enter password");
                     mProgress.dismiss();
-                }else {
+                } else {
                     AndroidNetworking.post(Constants.BASE_URL + "/api/login")
                             .addBodyParameter("email", text_email)
                             .addBodyParameter("password", text_pw)
@@ -121,10 +116,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-    }
-
-    private void connection() {
 
     }
 }

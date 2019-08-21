@@ -35,7 +35,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
     private SharedPreferences preferences;
-    private TextView tvUsername,tvPhone;
+    private TextView tvUsername, tvPhone;
     private CircleImageView ivProfile;
     private LinearLayout cardJobs, cardReports;
     private ImageView ivLogout;
@@ -45,13 +45,11 @@ public class DashboardActivity extends AppCompatActivity {
 
     SwipeRefreshLayout swipeLayout;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        /** init view */
         tvUsername = findViewById(R.id.tv_username);
         cardJobs = findViewById(R.id.card_jobs);
         cardReports = findViewById(R.id.card_reports);
@@ -78,7 +76,8 @@ public class DashboardActivity extends AppCompatActivity {
                 fetchProfile();
                 // To keep animation for 4 seconds
                 new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         // Stop animation (This will be after 3 seconds)
                         swipeLayout.setRefreshing(false);
                     }
@@ -101,7 +100,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = preferences.edit();
                                 editor.clear();
                                 editor.apply();
-                                Intent i = new Intent(getApplicationContext(),SplashActivity.class);
+                                Intent i = new Intent(getApplicationContext(), SplashActivity.class);
                                 startActivity(i);
                                 finish();
                             }
@@ -127,7 +126,7 @@ public class DashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchProfile(){
+    private void fetchProfile() {
         AndroidNetworking.get("http://sales-report.smkrus.com/api/profile/{id}")
                 .addPathParameter("id", String.valueOf(preferences.getLong("id", 0)))
                 .setPriority(Priority.HIGH)
@@ -149,8 +148,7 @@ public class DashboardActivity extends AppCompatActivity {
                                 } else {
                                     JSONObject errorObj = response.getJSONObject("error");
                                     String message = errorObj.getString("message");
-
-                                  Toast.makeText(DashboardActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(DashboardActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -159,6 +157,7 @@ public class DashboardActivity extends AppCompatActivity {
                         }
 
                     }
+
                     @Override
                     public void onError(ANError error) {
                         error.printStackTrace();
@@ -170,11 +169,12 @@ public class DashboardActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (TIME_LIMIT + backPressed > System.currentTimeMillis()){
-            super.onBackPressed();;
-        }else {
-            Toast.makeText(getApplicationContext(),"Tekan lagi untuk keluar",Toast.LENGTH_SHORT).show();
+        if (TIME_LIMIT + backPressed > System.currentTimeMillis()) {
+            super.onBackPressed();
+            ;
+        } else {
+            Toast.makeText(getApplicationContext(), "Tekan lagi untuk keluar", Toast.LENGTH_SHORT).show();
         }
-        backPressed =System.currentTimeMillis();
+        backPressed = System.currentTimeMillis();
     }
 }

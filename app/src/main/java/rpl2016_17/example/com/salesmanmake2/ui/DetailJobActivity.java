@@ -14,10 +14,11 @@ import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
 
 public class DetailJobActivity extends AppCompatActivity {
-    private Button btnMakeReport,btnMaps;
+    private Button btnMakeReport, btnMaps;
     private Toolbar toolbar;
-    private String name,address,phone,desc;
+    private String name, address, phone, desc;
     private static final String TAG = DetailJobActivity.class.getSimpleName();
+    TextView tvNama, tvAlamat, tvNomor, tvDeskripsi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +30,10 @@ public class DetailJobActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Rincian Pekerjaan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView tvNama = findViewById(R.id.tv_shop_name);
-        TextView tvAlamat = findViewById(R.id.tv_shop_address);
-        TextView tvNomor = findViewById(R.id.tv_shop_phone);
-        TextView tvDeskripsi = findViewById(R.id.tv_detail_job);
+        tvNama = findViewById(R.id.tv_shop_name);
+        tvAlamat = findViewById(R.id.tv_shop_address);
+        tvNomor = findViewById(R.id.tv_shop_phone);
+        tvDeskripsi = findViewById(R.id.tv_detail_job);
 
         final Job job = getIntent().getExtras().getParcelable("extra_job");
 
@@ -54,16 +55,16 @@ public class DetailJobActivity extends AppCompatActivity {
             }
         });
 
-        if(job != null){
+        if (job != null) {
             name = job.getShop_name();
             address = job.getShop_address();
             phone = job.getShop_phone();
             desc = job.getDescription();
 
-            Log.e(TAG, "onCreate: " + name );
-            Log.e(TAG, "onCreate: " + phone );
-            Log.e(TAG, "onCreate: " + desc );
-            Log.e(TAG, "onCreate: " + address );
+            Log.e(TAG, "onCreate: " + name);
+            Log.e(TAG, "onCreate: " + phone);
+            Log.e(TAG, "onCreate: " + desc);
+            Log.e(TAG, "onCreate: " + address);
 
             tvNama.setText(name);
             tvAlamat.setText(address);

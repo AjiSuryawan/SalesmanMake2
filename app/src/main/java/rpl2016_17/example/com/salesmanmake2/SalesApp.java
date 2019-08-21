@@ -5,6 +5,7 @@ import android.app.Application;
 import com.androidnetworking.AndroidNetworking;
 
 public class SalesApp extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();

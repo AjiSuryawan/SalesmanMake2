@@ -71,7 +71,8 @@ public class JobsActivity extends AppCompatActivity {
                 fetchJobs();
                 // To keep animation for 4 seconds
                 new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         // Stop animation (This will be after 3 seconds)
                         swipeLayout.setRefreshing(false);
                     }
@@ -79,14 +80,10 @@ public class JobsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Job is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
             }
         });
-
-
         setupRecyclerJobs();
-
-
     }
 
-    private void setupRecyclerJobs(){
+    private void setupRecyclerJobs() {
         jobsAdapter = new ListAdapter(this, jobList);
         rvJobs.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvJobs.setHasFixedSize(true);
