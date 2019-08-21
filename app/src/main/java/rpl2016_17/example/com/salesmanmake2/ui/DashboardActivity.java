@@ -35,7 +35,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private static final String TAG = DashboardActivity.class.getSimpleName();
     private SharedPreferences preferences;
-    private TextView tvUsername;
+    private TextView tvUsername,tvPhone;
     private CircleImageView ivProfile;
     private LinearLayout cardJobs, cardReports;
     private ImageView ivLogout;
@@ -53,11 +53,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         /** init view */
         tvUsername = findViewById(R.id.tv_username);
-        ivProfile = findViewById(R.id.iv_profile);
         cardJobs = findViewById(R.id.card_jobs);
         cardReports = findViewById(R.id.card_reports);
         ivLogout = findViewById(R.id.iv_logout);
         swipeLayout = findViewById(R.id.swipe_container);
+        tvPhone = findViewById(R.id.tv_phone);
 
         mProgress = new ProgressDialog(this);
         mProgress.setTitle("Loading...");
@@ -143,8 +143,9 @@ public class DashboardActivity extends AppCompatActivity {
 //                                    String email = payload.getString("email");
                                     String fullname = payload.getString("fullname");
 //                                    String address = payload.getString("address");
-//                                    String phone = String.valueOf(payload.getString("phone"));
+                                    String phone = String.valueOf(payload.getString("phone"));
                                     tvUsername.setText(fullname);
+                                    tvPhone.setText(phone);
                                 } else {
                                     JSONObject errorObj = response.getJSONObject("error");
                                     String message = errorObj.getString("message");

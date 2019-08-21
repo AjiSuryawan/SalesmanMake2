@@ -30,8 +30,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            superadmin@smkrus.com
-            smkrus12345</activity>
+            </activity>
         <activity android:name=".ui.LoginActivity" />
 
         <provider

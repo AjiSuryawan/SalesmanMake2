@@ -1,6 +1,7 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +14,9 @@ import rpl2016_17.example.com.salesmanmake2.R;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
 
 public class DetailJobActivity extends AppCompatActivity {
-    private Button btnMakeReport;
+    private Button btnMakeReport,btnMaps;
     private Toolbar toolbar;
+    private String name,address,phone,desc;
     private static final String TAG = DetailJobActivity.class.getSimpleName();
 
     @Override
@@ -44,11 +46,19 @@ public class DetailJobActivity extends AppCompatActivity {
             }
         });
 
+        btnMaps = findViewById(R.id.btn_see_maps);
+        btnMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                maps();
+            }
+        });
+
         if(job != null){
-            String name = job.getShop_name();
-            String address = job.getShop_address();
-            String phone = job.getShop_phone();
-            String desc = job.getDescription();
+            name = job.getShop_name();
+            address = job.getShop_address();
+            phone = job.getShop_phone();
+            desc = job.getDescription();
 
             Log.e(TAG, "onCreate: " + name );
             Log.e(TAG, "onCreate: " + phone );
@@ -60,6 +70,12 @@ public class DetailJobActivity extends AppCompatActivity {
             tvNomor.setText(String.valueOf(phone));
             tvDeskripsi.setText(desc);
         }
+    }
+
+    private void maps() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("geo:?q=" + address));
+        startActivity(intent);
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -52,7 +53,7 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
     private Toolbar toolbar;
     private Button btnPickImage;
     private Button btnSignature;
-    private ImageView ivSelectedImage;
+    private ImageView ivSelectedImage,ivPickImage;
     private Button btnSendReport;
     private File selectedImageFile = null;
     private static final int REQUEST_LOCATION = 1;
@@ -68,23 +69,30 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
         setContentView(R.layout.activity_form_record);
 
         toolbar = findViewById(R.id.toolbar);
-        btnPickImage = findViewById(R.id.btn_pick_image);
+//        btnPickImage = findViewById(R.id.btn_pick_image);
         btnSignature = findViewById(R.id.btn_Signature);
         ivSelectedImage =findViewById(R.id.iv_selectedImage);
+        ivPickImage =findViewById(R.id.iv_pick_image);
         btnSendReport = findViewById(R.id.btn_kirim_laporan);
         desc = findViewById(R.id.et_Deskirpsi);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
-
-        btnPickImage.setOnClickListener(new View.OnClickListener() {
+        ivPickImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 PickImageDialog.build(new PickSetup()).show(getSupportFragmentManager());
             }
         });
+
+
+//        btnPickImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PickImageDialog.build(new PickSetup()).show(getSupportFragmentManager());
+//            }
+//        });
 
         btnSignature.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,14 +139,6 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
     @Override
     public void onPickResult(PickResult pickResult) {
         if (pickResult.getError() == null) {
-            //If you want the Uri.
-            //Mandatory to refresh image from Uri.
-            //getImageView().setImageURI(null);
-
-            //Setting the real returned image.
-            //getImageView().setImageURI(r.getUri());
-
-            //If you want the Bitmap.
             selectedImage = pickResult.getBitmap();
             ivSelectedImage.setImageBitmap(selectedImage);
             btnSignature.setEnabled(true);
@@ -152,8 +152,6 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
             }
             Toast.makeText(getApplicationContext(), "Lattitude nya : " + lattitude + "Longitude nya : " + longitude, Toast.LENGTH_SHORT).show();
 
-            //Image path
-            //r.getPath();
             selectedImageFile = new File(pickResult.getPath());
         } else {
             //Handle possible errors
@@ -208,8 +206,7 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
         Bitmap result = Bitmap.createBitmap(w, h, selectedImage.getConfig());
         Canvas canvas = new Canvas(result);
         canvas.drawBitmap(selectedImage, 0f, 0f, null);
-        canvas.drawBitmap(signature, 100f, 100f, null);
-
+        canvas.drawBitmap(signature, 30f, 100f, null);
         ivSelectedImage.setImageBitmap(result);
     }
 
@@ -338,7 +335,6 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
     }
 
     protected void buildAlertMessageNoGps()     {
-
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Please Turn ON your GPS Connection")
                 .setCancelable(false)
@@ -355,6 +351,7 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
         final AlertDialog alert = builder.create();
         alert.show();
     }
+
 }
 
 
