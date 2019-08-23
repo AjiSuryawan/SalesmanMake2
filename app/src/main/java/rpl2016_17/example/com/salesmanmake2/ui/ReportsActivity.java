@@ -11,9 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
@@ -36,11 +39,16 @@ public class ReportsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     SwipeRefreshLayout swipeLayout;
     private ProgressDialog mProgress;
+    private LinearLayout indata, inload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
+
+        indata = findViewById(R.id.indata);
+        inload = findViewById(R.id.inloading);
+
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Reports");
@@ -55,9 +63,7 @@ public class ReportsActivity extends AppCompatActivity {
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
 
-        mProgress.show();
         fetchJobs();
-        mProgress.dismiss();
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -66,7 +72,8 @@ public class ReportsActivity extends AppCompatActivity {
                 fetchJobs();
                 // To keep animation for 4 seconds
                 new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         // Stop animation (This will be after 3 seconds)
                         swipeLayout.setRefreshing(false);
                     }
@@ -75,14 +82,13 @@ public class ReportsActivity extends AppCompatActivity {
             }
         });
         setupRecyclerJobs();
-
     }
 
     private void fetchJobs() {
         SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         AndroidNetworking.get(Constants.BASE_URL + "/api/report/all/{id}")
-//                .addPathParameter("id", String.valueOf(preferences.getLong("id", 0)))
-//                .setPriority(Priority.HIGH)
+                .addPathParameter("id", String.valueOf(preferences.getLong("id", 0)))
+                .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -102,6 +108,8 @@ public class ReportsActivity extends AppCompatActivity {
                                     item.setCreated_at(job.getString("created_at"));
                                     item.setProof_image(job.getString("proof_image"));
                                     jobList.add(item);
+                                    inload.setVisibility(View.GONE);
+                                    indata.setVisibility(View.VISIBLE);
                                     Log.e("", "onResponse: " + jobList.size());
                                 }
                                 jobsAdapter.notifyDataSetChanged();
@@ -115,16 +123,16 @@ public class ReportsActivity extends AppCompatActivity {
                                                     JSONObject payload = response.getJSONObject("payload");
                                                     JSONArray object = payload.getJSONArray("jobs");
                                                     jobList.clear();
-
                                                     for (int i = 0; i < jobs.length(); i++) {
                                                         JSONObject job = jobs.getJSONObject(i);
                                                         Job item = new Job();
                                                         item.setShop_name(job.getString("shop_name"));
                                                         jobList.add(item);
                                                         Log.e("", "onResponse: " + jobList.size());
+                                                        inload.setVisibility(View.GONE);
+                                                        indata.setVisibility(View.VISIBLE);
                                                     }
                                                     jobsAdapter.notifyDataSetChanged();
-
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
@@ -159,7 +167,6 @@ public class ReportsActivity extends AppCompatActivity {
         finish();
         return true;
     }
-
 
     private void setupRecyclerJobs() {
         jobsAdapter = new ReportsAdapter(this, jobList);

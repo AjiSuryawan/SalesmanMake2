@@ -19,12 +19,13 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ReportsV
 
     private Context mCtx;
 
-    //we are storing all the products in a list
     private List<Job> jobList;
+
     public ReportsAdapter(Context mCtx, List<Job> jobList) {
         this.mCtx = mCtx;
         this.jobList = jobList;
     }
+
     @NonNull
     @Override
     public ReportsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {

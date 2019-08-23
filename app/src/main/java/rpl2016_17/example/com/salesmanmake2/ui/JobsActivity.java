@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -39,12 +41,15 @@ public class JobsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     SwipeRefreshLayout swipeLayout;
     private ProgressDialog mProgress;
+    private LinearLayout indata,inload;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jobs);
+        indata = findViewById(R.id.indata);
+        inload = findViewById(R.id.inloading);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,9 +65,8 @@ public class JobsActivity extends AppCompatActivity {
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
 
-        mProgress.show();
+
         fetchJobs();
-        mProgress.dismiss();
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -71,7 +75,8 @@ public class JobsActivity extends AppCompatActivity {
                 fetchJobs();
                 // To keep animation for 4 seconds
                 new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         // Stop animation (This will be after 3 seconds)
                         swipeLayout.setRefreshing(false);
                     }
@@ -79,14 +84,10 @@ public class JobsActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Job is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
             }
         });
-
-
         setupRecyclerJobs();
-
-
     }
 
-    private void setupRecyclerJobs(){
+    private void setupRecyclerJobs() {
         jobsAdapter = new ListAdapter(this, jobList);
         rvJobs.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvJobs.setHasFixedSize(true);
@@ -116,9 +117,12 @@ public class JobsActivity extends AppCompatActivity {
                                     item.setShop_address(job.getString("shop_address"));
                                     item.setShop_phone(job.getString("shop_phone"));
                                     jobList.add(item);
+                                    inload.setVisibility(View.GONE);
+                                    indata.setVisibility(View.VISIBLE);
                                     Log.e("", "onResponse: " + jobList.size());
                                 }
                                 jobsAdapter.notifyDataSetChanged();
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

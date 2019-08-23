@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "690930685516",
+    "firebase_url": "https://salesmanmake2.firebaseio.com",
+    "project_id": "salesmanmake2",
+    "storage_bucket": "salesmanmake2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:690930685516:android:fb4ff48d6f5ed100",
+        "android_client_info": {
+          "package_name": "rpl2016_17.example.com.salesmanmake2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "690930685516-rbhtk2rg4ljor0qcd42t3gadn5hhkfak.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "rpl2016_17.example.com.salesmanmake2",
+            "certificate_hash": "b9cced7cdd07f908ff751a024468b593c7f696a5"
+          }
+        },
+        {
+          "client_id": "690930685516-7opjo9lrrcg0f004jgqg5dfa61fcrd11.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpGceyuRGxvxN30wRuWaweFejMbPW5XTo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "690930685516-7opjo9lrrcg0f004jgqg5dfa61fcrd11.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

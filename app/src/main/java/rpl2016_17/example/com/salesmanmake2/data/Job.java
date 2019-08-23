@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Job implements Parcelable {
+
     private int id;
     private String description;
     private String shop_name;

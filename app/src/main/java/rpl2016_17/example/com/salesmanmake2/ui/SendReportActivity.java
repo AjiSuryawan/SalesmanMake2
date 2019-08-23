@@ -12,6 +12,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -44,6 +46,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import rpl2016_17.example.com.salesmanmake2.Constants;
 import rpl2016_17.example.com.salesmanmake2.R;
@@ -51,33 +56,33 @@ import rpl2016_17.example.com.salesmanmake2.R;
 public class SendReportActivity extends AppCompatActivity implements IPickResult {
 
     private Toolbar toolbar;
-    private Button btnPickImage;
-    private Button btnSignature;
-    private ImageView ivSelectedImage,ivPickImage;
-    private Button btnSendReport;
+    private Button btnPickImage,btnSignature,btnSendReport;
+    private ImageView ivSelectedImage, ivPickImage;
     private File selectedImageFile = null;
+    private Bitmap signatureBitmap;
     private static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
-    String lattitude,longitude, et_desc;
+    String lattitude, longitude, et_desc;
     Bitmap selectedImage;
     EditText desc;
     private ProgressDialog mProgress;
+    List<Address> addresses;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_record);
-
         toolbar = findViewById(R.id.toolbar);
 //        btnPickImage = findViewById(R.id.btn_pick_image);
         btnSignature = findViewById(R.id.btn_Signature);
-        ivSelectedImage =findViewById(R.id.iv_selectedImage);
-        ivPickImage =findViewById(R.id.iv_pick_image);
+        ivSelectedImage = findViewById(R.id.iv_selectedImage);
+        ivPickImage = findViewById(R.id.iv_pick_image);
         btnSendReport = findViewById(R.id.btn_kirim_laporan);
         desc = findViewById(R.id.et_Deskirpsi);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         ivPickImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,30 +107,32 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
         });
 
 
-
         btnSendReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(SendReportActivity.this)
-                        .setTitle("Kirim Laporan")
-                        .setMessage("Apakah anda yakin ingin kirim laporan ?")
-                        .setNegativeButton("Tidak", null)
-                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                // kirim datanya
-//                                mProgress.show();
-                                senData();
-//                                mProgress.dismiss();
-                                Intent i = new Intent(getApplicationContext(),JobsActivity.class);
-                                startActivity(i);
-                                finish();
-                            }
-                        }).create().show();
+                et_desc = desc.getText().toString();
+                if (et_desc.length() == 0) {
+                    desc.setError("Insert Deskripsi");
+                } else if (selectedImage == null) {
+                    Toast.makeText(getApplicationContext(), "Please Insert Photo", Toast.LENGTH_SHORT).show();
+                }else {
+                    new AlertDialog.Builder(SendReportActivity.this)
+                            .setTitle("Kirim Laporan")
+                            .setMessage("Apakah anda yakin ingin kirim laporan ?")
+                            .setNegativeButton("Tidak", null)
+                            .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface arg0, int arg1) {
+//                                    mProgress.show();
+                                    senData();
+//                                    mProgress.dismiss();
+                                    Intent i = new Intent(getApplicationContext(), JobsActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            }).create().show();
+                }
             }
         });
-
-//        getLocation();
-
 
 
     }
@@ -150,7 +157,6 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
             } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 getLocation();
             }
-            Toast.makeText(getApplicationContext(), "Lattitude nya : " + lattitude + "Longitude nya : " + longitude, Toast.LENGTH_SHORT).show();
 
             selectedImageFile = new File(pickResult.getPath());
         } else {
@@ -192,7 +198,7 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
         btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap signatureBitmap = signaturePad.getTransparentSignatureBitmap(true);
+                signatureBitmap = signaturePad.getTransparentSignatureBitmap(true);
                 drawSignatureOnImage(signatureBitmap);
                 dialog.dismiss();
             }
@@ -222,34 +228,36 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
 
             Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            Location location2 = locationManager.getLastKnownLocation(LocationManager. PASSIVE_PROVIDER);
+            Location location2 = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
             if (location != null) {
                 double latti = location.getLatitude();
                 double longi = location.getLongitude();
-                lattitude = String.valueOf(latti);
-                longitude = String.valueOf(longi);
-
+                try {
+                    lattitude = String.valueOf(latti);
+                    longitude = String.valueOf(longi);
+                    Geocoder geocoder = new Geocoder(SendReportActivity.this, Locale.getDefault());
+                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    Toast.makeText(getApplicationContext(), addresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Gagal mengambil lokasi", Toast.LENGTH_SHORT).show();
+                }
                 Log.i("", "Lattitude nya : " + lattitude + "Longitude nya : " + longitude);
 
-//                textViewLoc.setVisibility(View.VISIBLE);
-//                textViewTime.setVisibility(View.VISIBLE);
-
-//                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
-//                        + "\n" + "Longitude = " + longitude);
-
-//                textViewLoc.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        maps();
-//                    }
-//                });
-
-            } else  if (location1 != null) {
+            } else if (location1 != null) {
                 double latti = location1.getLatitude();
                 double longi = location1.getLongitude();
-                lattitude = String.valueOf(latti);
-                longitude = String.valueOf(longi);
+                try {
+                    lattitude = String.valueOf(latti);
+                    longitude = String.valueOf(longi);
+                    Geocoder geocoder = new Geocoder(SendReportActivity.this, Locale.getDefault());
+                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    Toast.makeText(getApplicationContext(), addresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Gagal mengambil lokasi", Toast.LENGTH_SHORT).show();
+                }
 
                 Log.i("", "Lattitude nya : " + lattitude + "Longitude nya : " + longitude);
 //                textViewLoc.setVisibility(View.VISIBLE);
@@ -266,12 +274,19 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
 //                });
 
 
-            } else  if (location2 != null) {
+            } else if (location2 != null) {
                 double latti = location2.getLatitude();
                 double longi = location2.getLongitude();
-                lattitude = String.valueOf(latti);
-                longitude = String.valueOf(longi);
-
+                try {
+                    lattitude = String.valueOf(latti);
+                    longitude = String.valueOf(longi);
+                    Geocoder geocoder = new Geocoder(SendReportActivity.this, Locale.getDefault());
+                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                    Toast.makeText(getApplicationContext(), addresses.get(0).getAddressLine(4), Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Gagal mengambil lokasi", Toast.LENGTH_SHORT).show();
+                }
                 Log.i("", "Lattitude nya : " + lattitude + "Longitude nya : " + longitude);
 //                textViewLoc.setVisibility(View.VISIBLE);
 //                textViewTime.setVisibility(View.VISIBLE);
@@ -286,21 +301,19 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
 //                    }
 //                });
 
-            }else{
-
-                Toast.makeText(this,"Unble to Trace your location",Toast.LENGTH_SHORT).show();
-
+            } else {
+                Toast.makeText(this, "Unble to Trace your location", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void senData (){
+    private void senData() {
         SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         et_desc = desc.getText().toString();
         AndroidNetworking.upload(Constants.BASE_URL + "/api/report/send")
                 .addMultipartFile("proof_image", selectedImageFile)
-                .addMultipartParameter("job_id",String.valueOf(preferences.getLong("id", 0)))
-                .addMultipartParameter("location", "Longtitude : " + longitude + "Lattitude : " + lattitude)
+                .addMultipartParameter("job_id", String.valueOf(preferences.getLong("id", 0)))
+                .addMultipartParameter("location", String.valueOf(addresses))
                 .addMultipartParameter("description", et_desc)
                 .setPriority(Priority.HIGH)
                 .build()
@@ -318,23 +331,24 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
                             if (response.getBoolean("success")) {
                                 //tost
                                 Toast.makeText(getApplicationContext(), "Laporan berhasil dikirim", Toast.LENGTH_SHORT).show();
-
-                            }else{//toast gagal
+                            } else {//toast gagal
                                 Toast.makeText(getApplicationContext(), "Laporan gagal dikirim", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("Catch nya : ", e.getLocalizedMessage());
                             Toast.makeText(SendReportActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onError(ANError error) {
                         // handle error
-                    }
+                        Log.e("On Erornya", error.getErrorBody());               }
                 });
     }
 
-    protected void buildAlertMessageNoGps()     {
+    protected void buildAlertMessageNoGps() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Please Turn ON your GPS Connection")
                 .setCancelable(false)

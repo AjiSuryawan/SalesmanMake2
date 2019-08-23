@@ -16,11 +16,8 @@ import rpl2016_17.example.com.salesmanmake2.ui.DetailJobActivity;
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobsViewHolder> {
     private Context mCtx;
-
-    //we are storing all the products in a list
     private List<Job> jobList;
 
-    //getting the context and product list with constructor
     public ListAdapter(Context mCtx, List<Job> jobList) {
         this.mCtx = mCtx;
         this.jobList = jobList;
@@ -35,7 +32,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobsViewHolder
 
     @Override
     public void onBindViewHolder(final JobsViewHolder holder, final int position) {
-        //getting the product of the specified position
         final Job job = jobList.get(position);
         holder.name.setText(job.getShop_name());
         holder.address.setText(job.getShop_address());
@@ -47,7 +43,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobsViewHolder
     }
 
     class JobsViewHolder extends RecyclerView.ViewHolder {
-
         TextView name, address;
 
         JobsViewHolder(View itemView) {
@@ -61,9 +56,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.JobsViewHolder
                 public void onClick(View view) {
                     Intent i = new Intent(mCtx, DetailJobActivity.class);
                     i.putExtra("extra_job", jobList.get(getAdapterPosition()));
-
                     mCtx.startActivity(i);
-
                 }
             });
         }
