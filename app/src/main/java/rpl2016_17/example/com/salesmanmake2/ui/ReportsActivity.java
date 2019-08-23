@@ -11,6 +11,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -37,11 +39,16 @@ public class ReportsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     SwipeRefreshLayout swipeLayout;
     private ProgressDialog mProgress;
+    private LinearLayout indata, inload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
+
+        indata = findViewById(R.id.indata);
+        inload = findViewById(R.id.inloading);
+
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Reports");
@@ -56,9 +63,7 @@ public class ReportsActivity extends AppCompatActivity {
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
 
-        mProgress.show();
         fetchJobs();
-        mProgress.dismiss();
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -103,6 +108,8 @@ public class ReportsActivity extends AppCompatActivity {
                                     item.setCreated_at(job.getString("created_at"));
                                     item.setProof_image(job.getString("proof_image"));
                                     jobList.add(item);
+                                    inload.setVisibility(View.GONE);
+                                    indata.setVisibility(View.VISIBLE);
                                     Log.e("", "onResponse: " + jobList.size());
                                 }
                                 jobsAdapter.notifyDataSetChanged();
@@ -122,6 +129,8 @@ public class ReportsActivity extends AppCompatActivity {
                                                         item.setShop_name(job.getString("shop_name"));
                                                         jobList.add(item);
                                                         Log.e("", "onResponse: " + jobList.size());
+                                                        inload.setVisibility(View.GONE);
+                                                        indata.setVisibility(View.VISIBLE);
                                                     }
                                                     jobsAdapter.notifyDataSetChanged();
                                                 } catch (JSONException e) {

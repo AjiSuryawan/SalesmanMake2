@@ -72,7 +72,6 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_record);
-
         toolbar = findViewById(R.id.toolbar);
 //        btnPickImage = findViewById(R.id.btn_pick_image);
         btnSignature = findViewById(R.id.btn_Signature);
