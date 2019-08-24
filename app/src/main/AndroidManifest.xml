@@ -30,7 +30,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            </activity>
+        </activity>
         <activity android:name=".ui.LoginActivity" />
 
         <provider
@@ -51,7 +51,13 @@
         <activity android:name=".ui.SendReportActivity" >
         </activity>
 
+<<<<<<< HEAD
         <service android:name=".Notifications.MyFirebaseInstanceIdService">
+=======
+        <service android:name=".Notifications.MyFirebaseInstanceIdService"
+            android:enabled="true"
+            android:exported="true">
+>>>>>>> f43733007a8e3b9075fc598b8a7dfe9c3fd2de3c
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -62,7 +68,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+<<<<<<< HEAD
 
+=======
+>>>>>>> f43733007a8e3b9075fc598b8a7dfe9c3fd2de3c
     </application>
 
 </manifest>
