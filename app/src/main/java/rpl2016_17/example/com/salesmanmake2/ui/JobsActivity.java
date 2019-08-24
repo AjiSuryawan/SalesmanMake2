@@ -122,18 +122,15 @@ public class JobsActivity extends AppCompatActivity {
                                     Log.e("", "onResponse: " + jobList.size());
                                 }
                                 jobsAdapter.notifyDataSetChanged();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                         }
-
                     }
-
                     @Override
                     public void onError(ANError anError) {
-                        Log.e("", "onError: " + anError.getErrorBody());
+                        System.out.println("woy eror : " + anError);
                         Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                     }
                 });

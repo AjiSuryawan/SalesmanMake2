@@ -34,17 +34,20 @@ import rpl2016_17.example.com.salesmanmake2.data.Job;
 
 public class ReportsActivity extends AppCompatActivity {
     private RecyclerView rvJobs;
-    private ReportsAdapter jobsAdapter;
-    private List<Job> jobList = new ArrayList<>();
+    private ReportsAdapter reportsAdapter;
+    private List<Job> reportList = new ArrayList<>();
     private Toolbar toolbar;
     SwipeRefreshLayout swipeLayout;
     private ProgressDialog mProgress;
     private LinearLayout indata, inload;
+    Job Report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
+//
+//        Report = getIntent().getExtras().getParcelable("extra_job");
 
         indata = findViewById(R.id.indata);
         inload = findViewById(R.id.inloading);
@@ -84,6 +87,8 @@ public class ReportsActivity extends AppCompatActivity {
         setupRecyclerJobs();
     }
 
+//    String.valueOf(preferences.getLong("id", 0))
+    int idJobGan = 17;
     private void fetchJobs() {
         SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         AndroidNetworking.get(Constants.BASE_URL + "/api/report/all/{id}")
@@ -95,55 +100,23 @@ public class ReportsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getBoolean("success")) {
-                                JSONObject payload = response.getJSONObject("payload");
-                                final JSONArray jobs = payload.getJSONArray("jobs");
-                                jobList.clear();
-
-                                for (int i = 0; i < jobs.length(); i++) {
-                                    JSONObject job = jobs.getJSONObject(i);
+                                JSONArray payload = response.getJSONArray("payload");
+                                reportList.clear();
+                                for (int i = 0; i < payload.length(); i++) {
+                                    JSONObject job = payload.getJSONObject(i);
                                     Job item = new Job();
+                                    item.setShop_name(job.getString("description"));
                                     item.setDescription(job.getString("description"));
                                     item.setLocation(job.getString("location"));
                                     item.setStatus(job.getString("status"));
                                     item.setCreated_at(job.getString("created_at"));
                                     item.setProof_image(job.getString("proof_image"));
-                                    jobList.add(item);
+                                    reportList.add(item);
                                     inload.setVisibility(View.GONE);
                                     indata.setVisibility(View.VISIBLE);
-                                    Log.e("", "onResponse: " + jobList.size());
+                                    Log.e("", "onResponse: " + reportList.size());
                                 }
-                                jobsAdapter.notifyDataSetChanged();
-
-                                AndroidNetworking.get(Constants.BASE_URL + "/api/job/active/{id}")
-                                        .build()
-                                        .getAsJSONObject(new JSONObjectRequestListener() {
-                                            @Override
-                                            public void onResponse(JSONObject response) {
-                                                try {
-                                                    JSONObject payload = response.getJSONObject("payload");
-                                                    JSONArray object = payload.getJSONArray("jobs");
-                                                    jobList.clear();
-                                                    for (int i = 0; i < jobs.length(); i++) {
-                                                        JSONObject job = jobs.getJSONObject(i);
-                                                        Job item = new Job();
-                                                        item.setShop_name(job.getString("shop_name"));
-                                                        jobList.add(item);
-                                                        Log.e("", "onResponse: " + jobList.size());
-                                                        inload.setVisibility(View.GONE);
-                                                        indata.setVisibility(View.VISIBLE);
-                                                    }
-                                                    jobsAdapter.notifyDataSetChanged();
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onError(ANError anError) {
-
-                                            }
-                                        });
-
+                                reportsAdapter.notifyDataSetChanged();
 
                             }
                         } catch (JSONException e) {
@@ -155,7 +128,7 @@ public class ReportsActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(ANError anError) {
-                        Log.e("", "onError: " + anError.getErrorBody());
+                        System.out.println("onError: " + anError.getErrorBody());
                         Toast.makeText(ReportsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -169,10 +142,10 @@ public class ReportsActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerJobs() {
-        jobsAdapter = new ReportsAdapter(this, jobList);
+        reportsAdapter = new ReportsAdapter(this, reportList);
         rvJobs.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvJobs.setHasFixedSize(true);
-        rvJobs.setAdapter(jobsAdapter);
+        rvJobs.setAdapter(reportsAdapter);
     }
 
 }

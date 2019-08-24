@@ -30,7 +30,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ReportsV
     @Override
     public ReportsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.item_jobs, viewGroup, false);
+        View view = inflater.inflate(R.layout.item_reports, viewGroup, false);
         return new ReportsViewHolder(view);
     }
 
@@ -60,9 +60,7 @@ public class ReportsAdapter extends RecyclerView.Adapter<ReportsAdapter.ReportsV
                 public void onClick(View view) {
                     Intent i = new Intent(mCtx, DetailReportsActivity.class);
                     i.putExtra("extra_job", jobList.get(getAdapterPosition()));
-
                     mCtx.startActivity(i);
-
                 }
             });
         }

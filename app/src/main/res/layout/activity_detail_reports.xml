@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context=".ui.LoginActivity">
+            tools:context=".ui.DetailReportsActivity">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar2"
@@ -23,21 +23,21 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:title="Rincian Pekerjaan" />
 
-            <TextView
-                android:id="@+id/tv_shop_name2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                android:drawableStart="@drawable/ic_store"
-                android:drawableLeft="@drawable/ic_store"
-                android:drawablePadding="@dimen/_10sdp"
-                android:fontFamily="@font/mukta_semibold"
-                android:gravity="center_vertical"
-                android:text="-"
-                android:textSize="@dimen/_18ssp" />
+            <!--<TextView-->
+                <!--android:id="@+id/tv_shop_name2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginStart="@dimen/_10sdp"-->
+                <!--android:layout_marginTop="@dimen/_10sdp"-->
+                <!--android:layout_marginEnd="@dimen/_10sdp"-->
+                <!--android:layout_marginBottom="@dimen/_5sdp"-->
+                <!--android:drawableStart="@drawable/ic_store"-->
+                <!--android:drawableLeft="@drawable/ic_store"-->
+                <!--android:drawablePadding="@dimen/_10sdp"-->
+                <!--android:fontFamily="@font/mukta_semibold"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:text="-"-->
+                <!--android:textSize="@dimen/_18ssp" />-->
 
             <TextView
                 android:id="@+id/tv_status"
@@ -102,16 +102,6 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:background="@android:color/black" />
 
-            <TextView
-                android:id="@+id/tv_proof_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:fontFamily="@font/mukta_semibold"
-                android:text="Link image"
-                android:textSize="@dimen/_14ssp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -128,9 +118,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_120sdp"
                 android:fontFamily="@font/mukta_regular"
                 android:textSize="@dimen/_13ssp" />
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:id="@+id/iv_image_reports"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="@dimen/_120sdp"
+                android:scaleType="fitXY" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
