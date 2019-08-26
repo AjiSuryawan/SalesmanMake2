@@ -3,13 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="rpl2016_17.example.com.salesmanmake2">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <application
         android:name=".SalesApp"
         android:allowBackup="true"
@@ -19,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.DetailReportsActivity"></activity>
+        <activity android:name=".ui.DetailReportsActivity" />
+
         <activity android:name=".ui.ReportsActivity" />
         <activity android:name=".ui.DetailJobActivity" />
         <activity
@@ -32,7 +26,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.DashboardActivity"></activity>
 
+        <activity android:name=".ui.JobsActivity" />
+
+        <activity android:name=".ui.SendReportActivity"></activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"
@@ -43,21 +41,26 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/picker_provider_paths" />
         </provider>
+        <service
+            android:name=".Notifications.MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true"></service>
 
-        <activity android:name=".ui.DashboardActivity">
-
-        </activity>
-        <activity android:name=".ui.JobsActivity" />
-        <activity android:name=".ui.SendReportActivity" >
-        </activity>
-
-        <service android:name=".Notifications.MyFirebaseInstanceIdService"
+        <service
+            android:name=".Notifications.MyFirebaseInstanceIdService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
     </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
