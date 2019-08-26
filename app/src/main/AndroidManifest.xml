@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="rpl2016_17.example.com.salesmanmake2">
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:name=".SalesApp"
@@ -13,7 +19,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.DetailReportsActivity" />
-
         <activity android:name=".ui.ReportsActivity" />
         <activity android:name=".ui.DetailJobActivity" />
         <activity
@@ -27,10 +32,9 @@
         </activity>
         <activity android:name=".ui.LoginActivity" />
         <activity android:name=".ui.DashboardActivity"></activity>
-
         <activity android:name=".ui.JobsActivity" />
-
         <activity android:name=".ui.SendReportActivity"></activity>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"
@@ -42,44 +46,11 @@
                 android:resource="@xml/picker_provider_paths" />
         </provider>
 
-        <<<<<<< HEAD
-        =======
-        <activity android:name=".ui.DashboardActivity">
-
-        </activity>
-        <activity android:name=".ui.JobsActivity" />
-        <activity android:name=".ui.SendReportActivity" >
-        </activity>
-
-<<<<<<< HEAD
-        <service android:name=".Notifications.MyFirebaseInstanceIdService">
-=======
-        <service android:name=".Notifications.MyFirebaseInstanceIdService"
->>>>>>> c2ffdfba5805c0da5c08292ad2cc73af38797533
-            android:enabled="true"
-            android:exported="true">
->>>>>>> f43733007a8e3b9075fc598b8a7dfe9c3fd2de3c
+        <service android:name=".Notifications.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name=".Notifications.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-<<<<<<< HEAD
-
-=======
->>>>>>> f43733007a8e3b9075fc598b8a7dfe9c3fd2de3c
     </application>
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
