@@ -16,7 +16,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -52,6 +51,7 @@ import java.util.Locale;
 
 import rpl2016_17.example.com.salesmanmake2.Constants;
 import rpl2016_17.example.com.salesmanmake2.R;
+import rpl2016_17.example.com.salesmanmake2.data.Job;
 
 public class SendReportActivity extends AppCompatActivity implements IPickResult {
 
@@ -67,11 +67,13 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
     EditText desc;
     private ProgressDialog mProgress;
     List<Address> addresses;
-
+    Job job;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_record);
+
+        job = getIntent().getExtras().getParcelable("extra_job");
         toolbar = findViewById(R.id.toolbar);
 //        btnPickImage = findViewById(R.id.btn_pick_image);
         btnSignature = findViewById(R.id.btn_Signature);
@@ -288,18 +290,6 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
                     Toast.makeText(getApplicationContext(), "Gagal mengambil lokasi", Toast.LENGTH_SHORT).show();
                 }
                 Log.i("", "Lattitude nya : " + lattitude + "Longitude nya : " + longitude);
-//                textViewLoc.setVisibility(View.VISIBLE);
-//                textViewTime.setVisibility(View.VISIBLE);
-////                "geo:"+lattitude+","+longitude;
-//                textViewLoc.setText("Your current location is :"+ "\n" + "Lattitude = " + lattitude
-//                        + "\n" + "Longitude = " + longitude);
-//
-//                textViewLoc.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        maps();
-//                    }
-//                });
 
             } else {
                 Toast.makeText(this, "Unble to Trace your location", Toast.LENGTH_SHORT).show();
@@ -308,12 +298,17 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
     }
 
     private void senData() {
-        SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+//        String.valueOf(preferences.getLong("id", 0))
+//        String job_id = "12";
+        final SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         et_desc = desc.getText().toString();
+//        Log.d("job", String.valueOf(preferences.getLong("id", 0)));
+//        Log.d("location", String.valueOf(addresses));
+//        Log.d("description", et_desc);
         AndroidNetworking.upload(Constants.BASE_URL + "/api/report/send")
                 .addMultipartFile("proof_image", selectedImageFile)
-                .addMultipartParameter("job_id", String.valueOf(preferences.getLong("id", 0)))
-                .addMultipartParameter("location", String.valueOf(addresses))
+                .addMultipartParameter("job_id", String.valueOf(job.getId()))
+                .addMultipartParameter("location", lattitude + "," + longitude)
                 .addMultipartParameter("description", et_desc)
                 .setPriority(Priority.HIGH)
                 .build()

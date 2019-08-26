@@ -46,14 +46,39 @@
             android:enabled="true"
             android:exported="true"></service>
 
+<<<<<<< HEAD
         <service
             android:name=".Notifications.MyFirebaseInstanceIdService"
+=======
+        <activity android:name=".ui.DashboardActivity">
+
+        </activity>
+        <activity android:name=".ui.JobsActivity" />
+        <activity android:name=".ui.SendReportActivity" >
+        </activity>
+
+<<<<<<< HEAD
+        <service android:name=".Notifications.MyFirebaseInstanceIdService">
+=======
+        <service android:name=".Notifications.MyFirebaseInstanceIdService"
+>>>>>>> c2ffdfba5805c0da5c08292ad2cc73af38797533
             android:enabled="true"
             android:exported="true">
+>>>>>>> f43733007a8e3b9075fc598b8a7dfe9c3fd2de3c
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <service android:name=".Notifications.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+<<<<<<< HEAD
+
+=======
+>>>>>>> f43733007a8e3b9075fc598b8a7dfe9c3fd2de3c
     </application>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

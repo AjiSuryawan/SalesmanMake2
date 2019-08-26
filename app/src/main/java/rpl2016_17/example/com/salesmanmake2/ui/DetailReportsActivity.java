@@ -3,6 +3,7 @@ package rpl2016_17.example.com.salesmanmake2.ui;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidnetworking.AndroidNetworking;
@@ -16,7 +17,8 @@ import rpl2016_17.example.com.salesmanmake2.data.Job;
 
 public class DetailReportsActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    TextView tvNama, tvLokasi, tvTanggal, tvDeskripsi, tvImage, tvStatus;
+    TextView tvNama, tvLokasi, tvTanggal, tvDeskripsi, tvStatus;
+    ImageView ivImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,10 @@ public class DetailReportsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Rincian Pekerjaan");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tvNama = findViewById(R.id.tv_shop_name2);
-        tvLokasi = findViewById(R.id.tv_location);
+        tvLokasi = findViewById(R.id.tv_location2);
         tvTanggal = findViewById(R.id.tv_created_at);
         tvDeskripsi = findViewById(R.id.tv_detail_job);
-        tvImage = findViewById(R.id.tv_proof_image);
+        ivImage = findViewById(R.id.iv_image_reports);
         tvStatus = findViewById(R.id.tv_status);
 
         Job job = getIntent().getExtras().getParcelable("extra_job");
@@ -45,8 +46,8 @@ public class DetailReportsActivity extends AppCompatActivity {
             String date = job.getCreated_at();
             String desc = job.getDescription();
 
-            tvNama.setText(name);
-            tvImage.setText(image);
+//            tvNama.setText(name);
+//            tvImage.setText(image);
             tvStatus.setText(status);
             tvLokasi.setText(address);
             tvTanggal.setText(date);
