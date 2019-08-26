@@ -41,15 +41,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/picker_provider_paths" />
         </provider>
-        <service
-            android:name=".Notifications.MyFirebaseMessagingService"
-            android:enabled="true"
-            android:exported="true"></service>
 
-<<<<<<< HEAD
-        <service
-            android:name=".Notifications.MyFirebaseInstanceIdService"
-=======
+        <<<<<<< HEAD
+        =======
         <activity android:name=".ui.DashboardActivity">
 
         </activity>

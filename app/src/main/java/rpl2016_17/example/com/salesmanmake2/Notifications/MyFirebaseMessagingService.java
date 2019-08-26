@@ -1,26 +1,19 @@
 package rpl2016_17.example.com.salesmanmake2.Notifications;
 
+import android.util.Log;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
-<<<<<<< HEAD
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private static final String TAG = "MyFirebaseMsgService";
 
-}
-=======
-import com.google.firebase.messaging.RemoteMessage;
+    public void onNewToken(String token) {
+        Log.d(TAG, "Refreshed token: " + token);
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-        super.onMessageReceived(remoteMessage);
+        sendRegistrationToServer(token);
+    }
 
-
-        if(remoteMessage.getData().size() > 0){
-
-        }
-
-        String title = remoteMessage.getNotification().getTitle();
-        String body = remoteMessage.getNotification().getBody();
-
+    private void sendRegistrationToServer(String token) {
+        // TODO: Implement this method to send token to your app server.
     }
 }
->>>>>>> c2ffdfba5805c0da5c08292ad2cc73af38797533
