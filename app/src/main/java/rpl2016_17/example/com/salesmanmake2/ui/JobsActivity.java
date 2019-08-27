@@ -34,15 +34,13 @@ import rpl2016_17.example.com.salesmanmake2.adapter.ListAdapter;
 import rpl2016_17.example.com.salesmanmake2.data.Job;
 
 public class JobsActivity extends AppCompatActivity {
-
     private RecyclerView rvJobs;
     private ListAdapter jobsAdapter;
     private List<Job> jobList = new ArrayList<>();
     private Toolbar toolbar;
     SwipeRefreshLayout swipeLayout;
     private ProgressDialog mProgress;
-    private LinearLayout indata,inload;
-
+    private LinearLayout indata, inload;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +62,6 @@ public class JobsActivity extends AppCompatActivity {
         mProgress.setMessage("Please wait...");
         mProgress.setCancelable(false);
         mProgress.setIndeterminate(true);
-
 
         fetchJobs();
 
@@ -128,13 +125,13 @@ public class JobsActivity extends AppCompatActivity {
                             Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onError(ANError anError) {
                         System.out.println("woy eror : " + anError);
                         Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     @Override

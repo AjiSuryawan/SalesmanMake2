@@ -335,7 +335,6 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
                             Toast.makeText(SendReportActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void onError(ANError error) {
                         // handle error

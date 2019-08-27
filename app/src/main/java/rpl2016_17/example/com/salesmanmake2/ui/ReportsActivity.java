@@ -88,7 +88,7 @@ public class ReportsActivity extends AppCompatActivity {
     }
 
 //    String.valueOf(preferences.getLong("id", 0))
-    int idJobGan = 17;
+//    int idJobGan = 17;
     private void fetchJobs() {
         SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         AndroidNetworking.get(Constants.BASE_URL + "/api/report/all/{id}")
@@ -100,17 +100,18 @@ public class ReportsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getBoolean("success")) {
-                                JSONArray payload = response.getJSONArray("payload");
+                                JSONObject payload = response.getJSONObject("payload");
+                                JSONArray reports = payload.getJSONArray("reports");
                                 reportList.clear();
-                                for (int i = 0; i < payload.length(); i++) {
-                                    JSONObject job = payload.getJSONObject(i);
+                                for (int i = 0; i < reports.length(); i++) {
+                                    JSONObject report = reports.getJSONObject(i);
                                     Job item = new Job();
-                                    item.setShop_name(job.getString("description"));
-                                    item.setDescription(job.getString("description"));
-                                    item.setLocation(job.getString("location"));
-                                    item.setStatus(job.getString("status"));
-                                    item.setCreated_at(job.getString("created_at"));
-                                    item.setProof_image(job.getString("proof_image"));
+                                    item.setShop_name(report.getString("description"));
+                                    item.setDescription(report.getString("description"));
+                                    item.setLocation(report.getString("location"));
+                                    item.setStatus(report.getString("status"));
+                                    item.setCreated_at(report.getString("created_at"));
+                                    item.setProof_image(report.getString("proof_image"));
                                     reportList.add(item);
                                     inload.setVisibility(View.GONE);
                                     indata.setVisibility(View.VISIBLE);
