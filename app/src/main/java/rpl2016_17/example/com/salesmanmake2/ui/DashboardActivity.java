@@ -80,9 +80,9 @@ public class DashboardActivity extends AppCompatActivity {
                     public void run() {
                         // Stop animation (This will be after 3 seconds)
                         swipeLayout.setRefreshing(false);
+                        Toast.makeText(getApplicationContext(), "Profile is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
                     }
                 }, 3000);
-                Toast.makeText(getApplicationContext(), "Profile is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
             }
         });
 

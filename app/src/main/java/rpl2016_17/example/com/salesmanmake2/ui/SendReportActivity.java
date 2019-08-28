@@ -56,7 +56,7 @@ import rpl2016_17.example.com.salesmanmake2.data.Job;
 public class SendReportActivity extends AppCompatActivity implements IPickResult {
 
     private Toolbar toolbar;
-    private Button btnPickImage,btnSignature,btnSendReport;
+    private Button btnPickImage, btnSignature, btnSendReport;
     private ImageView ivSelectedImage, ivPickImage;
     private File selectedImageFile = null;
     private Bitmap signatureBitmap;
@@ -68,6 +68,7 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
     private ProgressDialog mProgress;
     List<Address> addresses;
     Job job;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +85,12 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mProgress = new ProgressDialog(this);
+        mProgress.setTitle("Uploading...");
+        mProgress.setMessage("Please wait...");
+        mProgress.setCancelable(false);
+        mProgress.setIndeterminate(true);
 
 
         ivPickImage.setOnClickListener(new View.OnClickListener() {
@@ -117,19 +124,19 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
                     desc.setError("Insert Deskripsi");
                 } else if (selectedImage == null) {
                     Toast.makeText(getApplicationContext(), "Please Insert Photo", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     new AlertDialog.Builder(SendReportActivity.this)
                             .setTitle("Kirim Laporan")
                             .setMessage("Apakah anda yakin ingin kirim laporan ?")
                             .setNegativeButton("Tidak", null)
                             .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface arg0, int arg1) {
-//                                    mProgress.show();
+                                    mProgress.show();
                                     senData();
 //                                    mProgress.dismiss();
-                                    Intent i = new Intent(getApplicationContext(), JobsActivity.class);
-                                    startActivity(i);
-                                    finish();
+//                                    Intent i = new Intent(getApplicationContext(), JobsActivity.class);
+//                                    startActivity(i);
+//                                    finish();
                                 }
                             }).create().show();
                 }
@@ -227,9 +234,7 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
 
         } else {
             Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
             Location location1 = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
             Location location2 = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
             if (location != null) {
@@ -329,16 +334,22 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
                             } else {//toast gagal
                                 Toast.makeText(getApplicationContext(), "Laporan gagal dikirim", Toast.LENGTH_SHORT).show();
                             }
+                            mProgress.dismiss();
+                            Intent i = new Intent(getApplicationContext(), JobsActivity.class);
+                            startActivity(i);
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.e("Catch nya : ", e.getLocalizedMessage());
                             Toast.makeText(SendReportActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     @Override
                     public void onError(ANError error) {
                         // handle error
-                        Log.e("On Erornya", error.getErrorBody());               }
+                        Log.e("On Erornya", error.getErrorBody());
+                    }
                 });
     }
 
