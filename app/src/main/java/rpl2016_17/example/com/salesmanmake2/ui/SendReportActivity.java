@@ -336,6 +336,7 @@ public class SendReportActivity extends AppCompatActivity implements IPickResult
                             }
                             mProgress.dismiss();
                             Intent i = new Intent(getApplicationContext(), JobsActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                             finish();
                         } catch (JSONException e) {
