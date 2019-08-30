@@ -75,7 +75,7 @@ public class ReportsActivity extends AppCompatActivity {
             public void onRefresh() {
                 // Your code here
                 // To keep animation for 4 seconds
-                if (isConnected(ReportsActivity.this)){
+                if (isConnected(ReportsActivity.this)) {
                     fetchJobs();
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -85,7 +85,7 @@ public class ReportsActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Reports is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
                         }
                     }, 3000);
-                }else {
+                } else {
                     swipeLayout.setRefreshing(false);
                     Toast.makeText(ReportsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
                 }
@@ -94,7 +94,7 @@ public class ReportsActivity extends AppCompatActivity {
         setupRecyclerJobs();
     }
 
-//    String.valueOf(preferences.getLong("id", 0))
+    //    String.valueOf(preferences.getLong("id", 0))
 //    int idJobGan = 17;
     private void fetchJobs() {
         SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -106,28 +106,30 @@ public class ReportsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (response.getBoolean("success") == true) {
+                            if (response.getBoolean("success")) {
                                 JSONObject payload = response.getJSONObject("payload");
                                 JSONArray reports = payload.getJSONArray("reports");
-                                reportList.clear();
-                                for (int i = 0; i < reports.length(); i++) {
-                                    JSONObject report = reports.getJSONObject(i);
-                                    Job item = new Job();
-                                    item.setShop_name(report.getString("description"));
-                                    item.setDescription(report.getString("description"));
-                                    item.setLocation(report.getString("location"));
-                                    item.setStatus(report.getString("status"));
-                                    item.setCreated_at(report.getString("created_at"));
-                                    item.setProof_image(report.getString("proof_image"));
-                                    reportList.add(item);
+                                if (payload != null) {
+                                    reportList.clear();
+                                    for (int i = 0; i < reports.length(); i++) {
+                                        JSONObject report = reports.getJSONObject(i);
+                                        Job item = new Job();
+                                        item.setShop_name(report.getString("description"));
+                                        item.setDescription(report.getString("description"));
+                                        item.setLocation(report.getString("location"));
+                                        item.setStatus(report.getString("status"));
+                                        item.setCreated_at(report.getString("created_at"));
+                                        item.setProof_image(report.getString("proof_image"));
+                                        reportList.add(item);
+                                        inload.setVisibility(View.GONE);
+                                        indata.setVisibility(View.VISIBLE);
+                                        Log.e("", "onResponse: " + reportList.size());
+                                    }
+                                    reportsAdapter.notifyDataSetChanged();
+                                } else {
                                     inload.setVisibility(View.GONE);
-                                    indata.setVisibility(View.VISIBLE);
-                                    Log.e("", "onResponse: " + reportList.size());
+                                    noreport.setVisibility(View.VISIBLE);
                                 }
-                                reportsAdapter.notifyDataSetChanged();
-                            }else if (response.getBoolean("success") == false){
-                                inload.setVisibility(View.GONE);
-                                noreport.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

@@ -111,27 +111,29 @@ public class JobsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             System.out.println("Log " + response.getBoolean("success"));
-                            if (response.getBoolean("success") == true) {
+                            if (response.getBoolean("success")) {
                                 JSONObject payload = response.getJSONObject("payload");
                                 JSONArray jobs = payload.getJSONArray("jobs");
-                                jobList.clear();
-                                for (int i = 0; i < jobs.length(); i++) {
-                                    JSONObject job = jobs.getJSONObject(i);
-                                    Job item = new Job();
-                                    item.setShop_name(job.getString("shop_name"));
-                                    item.setDescription(job.getString("job_description"));
-                                    item.setId(job.getInt("job_id"));
-                                    item.setShop_address(job.getString("shop_address"));
-                                    item.setShop_phone(job.getString("shop_phone"));
-                                    jobList.add(item);
+                                if (payload != null) {
+                                    jobList.clear();
+                                    for (int i = 0; i < jobs.length(); i++) {
+                                        JSONObject job = jobs.getJSONObject(i);
+                                        Job item = new Job();
+                                        item.setShop_name(job.getString("shop_name"));
+                                        item.setDescription(job.getString("job_description"));
+                                        item.setId(job.getInt("job_id"));
+                                        item.setShop_address(job.getString("shop_address"));
+                                        item.setShop_phone(job.getString("shop_phone"));
+                                        jobList.add(item);
+                                        inload.setVisibility(View.GONE);
+                                        indata.setVisibility(View.VISIBLE);
+                                        Log.e("", "onResponse: " + jobList.size());
+                                    }
+                                    jobsAdapter.notifyDataSetChanged();
+                                } else {
                                     inload.setVisibility(View.GONE);
-                                    indata.setVisibility(View.VISIBLE);
-                                    Log.e("", "onResponse: " + jobList.size());
+                                    nojob.setVisibility(View.VISIBLE);
                                 }
-                                jobsAdapter.notifyDataSetChanged();
-                            } else if (response.getBoolean("success") == false) {
-                                inload.setVisibility(View.GONE);
-                                nojob.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
