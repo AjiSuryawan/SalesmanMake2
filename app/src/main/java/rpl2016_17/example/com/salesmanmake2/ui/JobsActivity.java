@@ -41,7 +41,7 @@ public class JobsActivity extends AppCompatActivity {
     private ListAdapter jobsAdapter;
     private List<Job> jobList = new ArrayList<>();
     private Toolbar toolbar;
-    SwipeRefreshLayout swipeLayout;
+    SwipeRefreshLayout swipeLayout,swipenojob;
     private ProgressDialog mProgress;
     private LinearLayout indata, inload, nojob;
 
@@ -60,6 +60,7 @@ public class JobsActivity extends AppCompatActivity {
 
         rvJobs = findViewById(R.id.rv_list);
         swipeLayout = findViewById(R.id.swipe_container);
+        swipenojob = findViewById(R.id.swipe_no_job);
 
         mProgress = new ProgressDialog(this);
         mProgress.setTitle("Processing...");
@@ -70,6 +71,28 @@ public class JobsActivity extends AppCompatActivity {
         fetchJobs();
 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code here
+                // To keep animation for 4 seconds
+                if (isConnected(JobsActivity.this)) {
+                    fetchJobs();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Stop animation (This will be after 3 seconds)
+                            swipeLayout.setRefreshing(false);
+                            Toast.makeText(getApplicationContext(), "Job is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+                        }
+                    }, 3000);
+                } else {
+                    swipeLayout.setRefreshing(false);
+                    Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        swipenojob.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // Your code here
