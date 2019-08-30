@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+   <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -14,13 +14,13 @@
         app:title="Jobs" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/indata"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -28,24 +28,39 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/inloading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <ProgressBar
-            android:layout_gravity="center"
-            android:layout_marginTop="250dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
         </ProgressBar>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/nojob"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Jobs"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

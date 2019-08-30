@@ -3,6 +3,8 @@ package rpl2016_17.example.com.salesmanmake2.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -40,7 +43,7 @@ public class JobsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     SwipeRefreshLayout swipeLayout;
     private ProgressDialog mProgress;
-    private LinearLayout indata, inload;
+    private LinearLayout indata, inload, nojob;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class JobsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_jobs);
         indata = findViewById(R.id.indata);
         inload = findViewById(R.id.inloading);
+        nojob = findViewById(R.id.nojob);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,16 +73,21 @@ public class JobsActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 // Your code here
-                fetchJobs();
                 // To keep animation for 4 seconds
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Stop animation (This will be after 3 seconds)
-                        swipeLayout.setRefreshing(false);
-                        Toast.makeText(getApplicationContext(), "Job is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
-                    }
-                }, 3000);
+                if (isConnected(JobsActivity.this)) {
+                    fetchJobs();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Stop animation (This will be after 3 seconds)
+                            swipeLayout.setRefreshing(false);
+                            Toast.makeText(getApplicationContext(), "Job is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+                        }
+                    }, 3000);
+                } else {
+                    swipeLayout.setRefreshing(false);
+                    Toast.makeText(JobsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         setupRecyclerJobs();
@@ -101,6 +110,7 @@ public class JobsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            System.out.println("Log " + response.getBoolean("success"));
                             if (response.getBoolean("success")) {
                                 JSONObject payload = response.getJSONObject("payload");
                                 JSONArray jobs = payload.getJSONArray("jobs");
@@ -119,6 +129,9 @@ public class JobsActivity extends AppCompatActivity {
                                     Log.e("", "onResponse: " + jobList.size());
                                 }
                                 jobsAdapter.notifyDataSetChanged();
+                            } else {
+                                inload.setVisibility(View.GONE);
+                                nojob.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -138,5 +151,20 @@ public class JobsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    public boolean isConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+                return true;
+            else return false;
+        } else
+            return false;
     }
 }

@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.SyncStateContract;
@@ -42,6 +44,7 @@ public class DashboardActivity extends AppCompatActivity {
     private static final int TIME_LIMIT = 1500;
     private static long backPressed;
     private ProgressDialog mProgress;
+    private boolean onInternet = false;
 
     SwipeRefreshLayout swipeLayout;
 
@@ -75,14 +78,19 @@ public class DashboardActivity extends AppCompatActivity {
                 // Your code here
                 fetchProfile();
                 // To keep animation for 4 seconds
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Stop animation (This will be after 3 seconds)
-                        swipeLayout.setRefreshing(false);
-                        Toast.makeText(getApplicationContext(), "Profile is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
-                    }
-                }, 3000);
+                if (isConnected(DashboardActivity.this)) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Stop animation (This will be after 3 seconds)
+                            swipeLayout.setRefreshing(false);
+                            Toast.makeText(getApplicationContext(), "Profile is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+                        }
+                    }, 3000);
+                } else {
+                    swipeLayout.setRefreshing(false);
+                    Toast.makeText(DashboardActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -145,6 +153,7 @@ public class DashboardActivity extends AppCompatActivity {
                                     String phone = String.valueOf(payload.getString("phone"));
                                     tvUsername.setText(fullname);
                                     tvPhone.setText(phone);
+                                    onInternet = true;
                                 } else {
                                     JSONObject errorObj = response.getJSONObject("error");
                                     String message = errorObj.getString("message");
@@ -176,5 +185,20 @@ public class DashboardActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Tekan lagi untuk keluar", Toast.LENGTH_SHORT).show();
         }
         backPressed = System.currentTimeMillis();
+    }
+
+    public boolean isConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+                return true;
+            else return false;
+        } else
+            return false;
     }
 }

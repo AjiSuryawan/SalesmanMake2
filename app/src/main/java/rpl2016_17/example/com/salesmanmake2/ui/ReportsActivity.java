@@ -3,6 +3,8 @@ package rpl2016_17.example.com.salesmanmake2.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -39,8 +41,7 @@ public class ReportsActivity extends AppCompatActivity {
     private Toolbar toolbar;
     SwipeRefreshLayout swipeLayout;
     private ProgressDialog mProgress;
-    private LinearLayout indata, inload;
-    Job Report;
+    private LinearLayout indata, inload, noreport;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class ReportsActivity extends AppCompatActivity {
 
         indata = findViewById(R.id.indata);
         inload = findViewById(R.id.inloading);
+        noreport = findViewById(R.id.noreport);
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -72,16 +74,21 @@ public class ReportsActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 // Your code here
-                fetchJobs();
                 // To keep animation for 4 seconds
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Stop animation (This will be after 3 seconds)
-                        swipeLayout.setRefreshing(false);
-                        Toast.makeText(getApplicationContext(), "Reports is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
-                    }
-                }, 3000);
+                if (isConnected(ReportsActivity.this)){
+                    fetchJobs();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Stop animation (This will be after 3 seconds)
+                            swipeLayout.setRefreshing(false);
+                            Toast.makeText(getApplicationContext(), "Reports is Up to date!", Toast.LENGTH_SHORT).show();// Delay in millis
+                        }
+                    }, 3000);
+                }else {
+                    swipeLayout.setRefreshing(false);
+                    Toast.makeText(ReportsActivity.this, Constants.EROR, Toast.LENGTH_SHORT).show();
+                }
             }
         });
         setupRecyclerJobs();
@@ -118,7 +125,9 @@ public class ReportsActivity extends AppCompatActivity {
                                     Log.e("", "onResponse: " + reportList.size());
                                 }
                                 reportsAdapter.notifyDataSetChanged();
-
+                            }else {
+                                inload.setVisibility(View.GONE);
+                                noreport.setVisibility(View.VISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -149,4 +158,18 @@ public class ReportsActivity extends AppCompatActivity {
         rvJobs.setAdapter(reportsAdapter);
     }
 
+    public boolean isConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if ((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting()))
+                return true;
+            else return false;
+        } else
+            return false;
+    }
 }
