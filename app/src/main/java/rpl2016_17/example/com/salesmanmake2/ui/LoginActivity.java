@@ -1,5 +1,6 @@
 package rpl2016_17.example.com.salesmanmake2.ui;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.livinglifetechway.quickpermissions.annotations.WithPermissions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.et_email);
         pw = findViewById(R.id.et_pw);
         btnlogin = findViewById(R.id.btn_login);
+
+        autoHandlePermissions();
 
         mProgress = new ProgressDialog(this);
         mProgress.setTitle("Processing...");
@@ -117,5 +122,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @WithPermissions(permissions = {Manifest.permission.CAMERA, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    private void autoHandlePermissions() {
+        Toast.makeText(this, "Permissions granted", Toast.LENGTH_SHORT).show();
     }
 }

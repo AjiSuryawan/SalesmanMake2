@@ -106,7 +106,7 @@ public class ReportsActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            if (response.getBoolean("success")) {
+                            if (response.getBoolean("success") == true) {
                                 JSONObject payload = response.getJSONObject("payload");
                                 JSONArray reports = payload.getJSONArray("reports");
                                 reportList.clear();
@@ -125,7 +125,7 @@ public class ReportsActivity extends AppCompatActivity {
                                     Log.e("", "onResponse: " + reportList.size());
                                 }
                                 reportsAdapter.notifyDataSetChanged();
-                            }else {
+                            }else if (response.getBoolean("success") == false){
                                 inload.setVisibility(View.GONE);
                                 noreport.setVisibility(View.VISIBLE);
                             }

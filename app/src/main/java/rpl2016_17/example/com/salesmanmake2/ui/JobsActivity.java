@@ -134,7 +134,7 @@ public class JobsActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             System.out.println("Log " + response.getBoolean("success"));
-                            if (response.getBoolean("success")) {
+                            if (response.getBoolean("success") == true) {
                                 JSONObject payload = response.getJSONObject("payload");
                                 JSONArray jobs = payload.getJSONArray("jobs");
                                 jobList.clear();
@@ -152,7 +152,7 @@ public class JobsActivity extends AppCompatActivity {
                                     Log.e("", "onResponse: " + jobList.size());
                                 }
                                 jobsAdapter.notifyDataSetChanged();
-                            } else {
+                            } else if (response.getBoolean("success") == false) {
                                 inload.setVisibility(View.GONE);
                                 nojob.setVisibility(View.VISIBLE);
                             }
